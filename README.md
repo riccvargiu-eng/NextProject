@@ -1,3 +1,48 @@
+# 🎬 FilmPicker — User Story & How It Works
+
+## 📒 User Story
+
+As a user who is unsure which movie to watch, I want to select my favorite movies from a random list and receive a random recommendation from them, so that I can easily decide what to watch without scrolling for hours on streaming sites!
+
+---
+
+## 🛠️ How It Works
+
+- The website displays a card with a single movie, including key information such as the title, description, and trailer.  
+  You can choose to **save it to your list** or **skip to the next movie**.
+
+- Once you have created your own list, the website will **randomly select a movie** from your saved favorites.
+
+---
+
+## 🖋️ How to Use
+
+1. **Choose the total number of movies** you want to save to your list. This determines how many movies the filter will propose.
+2. **Select the genre and/or rating** of the movies you want to see.
+3. **Start browsing the movie cards**. Use the “Save” button to add a movie to your list, or skip to the next one.
+4. Once you reach the **number of movies you previously selected**, your list will be complete, and no more movie proposals will appear. You will be redirected to the page showing your **selected movies list**.
+5. You can **remove movies** from the list if you change your mind.
+6. When you are ready, click the **randomize button**, and the application will **choose a movie for you**!
+
+---
+
+## 📊 Main Features
+
+- Single-scroll movie cards with poster, description, and trailer.
+- Save favorite movies to a personal list.
+- Random selection from saved movies to help decision-making.
+- Filters for genre and rating.
+- Ability to remove movies from the list before making the final choice.
+
+---
+
+## 👌 Credits
+
+Thanks to **TMDB** for providing the API necessary for the functionality of this site!
+
+---
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
