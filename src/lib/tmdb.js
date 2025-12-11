@@ -6,6 +6,7 @@
 //   return res.json();
 // }
 
+
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 export async function getMoviesByGenre(genreId) {

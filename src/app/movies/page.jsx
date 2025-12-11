@@ -1,7 +1,7 @@
-import { getPopularMovies } from "../../lib/tmdb";
+import { getMoviesByGenre } from "../../lib/tmdb";
 
 export default async function MoviesPage() {
-  const data = await getPopularMovies();
+  const data = await getMoviesByGenre();
 
   return (
     <main>
