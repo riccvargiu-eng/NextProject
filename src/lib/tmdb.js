@@ -18,3 +18,14 @@ export async function getMoviesByGenre(genreId) {
 
   return res.json();
 }
+
+export async function getMovieGenres() {
+  const res = await fetch(
+    `${TMDB_BASE_URL}/genre/movie/list?api_key=${process.env.TMDB_API_KEY}&language=it-IT`,
+    { next: { revalidate: 86400 } }
+  );
+
+  if (!res.ok) throw new Error("Failed to fetch movie genres");
+
+  return res.json();
+}

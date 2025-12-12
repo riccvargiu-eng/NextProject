@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getMovieGenres } from "@/lib/tmdb";
 
 export default function SetupPage() {
   const router = useRouter();
@@ -13,12 +12,14 @@ export default function SetupPage() {
   const [totalMovies, setTotalMovies] = useState(5); // numero film da salvare
   const [loading, setLoading] = useState(false);
 
-  // Carichiamo i generi da TMDB
+  // Carichiamo i generi tramite API route server-side
   useEffect(() => {
     async function fetchGenres() {
       try {
-        const data = await getMovieGenres();
-        setGenres(data.genres);
+        const res = await fetch("/api/genres");
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error || "Failed to fetch genres");
+        setGenres(data.genres || []);
       } catch (error) {
         console.error("Error fetching genres:", error);
       }
@@ -27,6 +28,7 @@ export default function SetupPage() {
   }, []);
 
   const handleStart = () => {
+    if (!selectedGenre) return alert("Please select a genre!");
     setLoading(true);
     router.push(
       `/browse?genre=${selectedGenre}&rating=${selectedRating}&total=${totalMovies}` // reindirizza alla pagina di navigazione con i parametri selezionati
@@ -34,53 +36,57 @@ export default function SetupPage() {
   };
 
   return (
-    <main className="p-6 max-w-md mx-auto"> {/* Contenitore centrale */}
-      <h1 className="text-2xl font-bold mb-4">Setup Filters: </h1> {/* Titolo della pagina */}
+    <main className="p-6 max-w-md mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Setup Filters</h1>
 
-      <label className="block mb-2">    {/* Numero di film da salvare */}
+      {/* Numero di film da salvare */}
+      <label className="block mb-2">
         Create your list!
         <input
           type="number"
           min="1"
-          max="20"
+          max="10"
           value={totalMovies}
           onChange={(e) => setTotalMovies(Number(e.target.value))}
-          className="border p-1 ml-2 w-16"  {/* Input per il numero di film */}
+          className="border p-1 ml-2 w-16"
         />
       </label>
 
-      <label className="block mb-2">   {/* Selezione del genere */}
+      {/* Selezione del genere */}
+      <label className="block mb-4">
         Genre:
         <select
           value={selectedGenre}
           onChange={(e) => setSelectedGenre(e.target.value)}
-          className="border p-1 ml-2"   {/* Dropdown per la selezione del genere */}
+          className="border p-1 ml-2 w-full"
         >
           <option value="">-- Choose genre --</option>
           {genres.map((g) => (
-            <option key={g.id} value={g.id}> {/* Opzioni dei generi */}
+            <option key={g.id} value={g.id}>
               {g.name}
             </option>
           ))}
         </select>
       </label>
 
+      {/* Slider rating */}
       <label className="block mb-4">
-        Minimum rating:
+        Minimum rating: {selectedRating.toFixed(1)}
         <input
-          type="number"
+          type="range"
           min="0"
-          max="10"
+          max="7"
           step="0.1"
           value={selectedRating}
           onChange={(e) => setSelectedRating(Number(e.target.value))}
-          className="border p-1 ml-2 w-16"  {/* Input per il rating minimo */}
+          className="w-full mt-2"
         />
       </label>
 
+      {/* Pulsante start */}
       <button
         onClick={handleStart}
-        className="bg-blue-600 text-white px-4 py-2 rounded" /* Pulsante di avvio */
+        className="bg-blue-600 text-white px-4 py-2 rounded"
       >
         Start
       </button>
