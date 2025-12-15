@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -13,7 +13,7 @@ function shuffleArray(array) {
   return arr;
 }
 
-export default function ResultPage() {
+function ResultContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -153,5 +153,19 @@ export default function ResultPage() {
         Try Again
       </button>
     </main>
+  );
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex items-center justify-center min-h-screen p-6">
+          <p className="text-lg">Loading...</p>
+        </main>
+      }
+    >
+      <ResultContent />
+    </Suspense>
   );
 }
