@@ -4,15 +4,25 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export default function DetailsPage({ params }) {
+export default function DetailsPage({ params: paramsPromise }) {
   const router = useRouter();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [movieId, setMovieId] = useState(null);
 
   useEffect(() => {
+    async function unwrapParams() {
+      const params = await paramsPromise;
+      setMovieId(params.id);
+    }
+    unwrapParams();
+  }, [paramsPromise]);
+
+  useEffect(() => {
+    if (!movieId) return;
     async function fetchMovie() {
       try {
-        const res = await fetch(`/api/movies/${params.id}`);
+        const res = await fetch(`/api/movies/${movieId}`);
         if (!res.ok) throw new Error("Failed to fetch movie");
         const data = await res.json();
         setMovie(data);
@@ -23,7 +33,7 @@ export default function DetailsPage({ params }) {
       }
     }
     fetchMovie();
-  }, [params.id]);
+  }, [movieId]);
 
   if (loading) {
     return (
