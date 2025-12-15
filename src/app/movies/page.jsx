@@ -1,39 +1,20 @@
-// // import { getPopularMovies } from '../../lib/tmdb'
+"use client";
 
-// // export default async function MoviesPage() {
-// //   const data = await getPopularMovies()
+import { useRouter } from "next/navigation";
 
-// //   return (
-// //     <main>
-// //       <h1>Film Popolari</h1>
-// //       <div>
-// //         {data.results.slice(0, 10).map(movie => (
-// //           <article key={movie.id}>
-// //             <h3>{movie.title}</h3>
-// //           </article>
-// //         ))}
-// //       </div>
-// //     </main>
-// //   )
-// // }
+export default function MoviesPage() {
+  const router = useRouter();
 
-// import { getMoviesByGenre } from "../../lib/tmdb";
-
-// export default async function MoviesPage() {
-//   const genreId = 27;
-//   const data = await getMoviesByGenre(genreId);
-
-//   return (
-//     <main>
-//       <h1>Film Popolari</h1>
-
-//       {data.results?.length === 0 && <p>Nessun film trovato</p>}
-
-//       {data.results?.slice(0, 10).map((movie) => (
-//         <article key={movie.id}>
-//           <h3>{movie.title}</h3>
-//         </article>
-//       ))}
-//     </main>
-//   );
-// }
+  return (
+    <main className="flex flex-col items-center justify-center min-h-screen p-6">
+      <h1 className="text-2xl font-bold mb-4">Movies</h1>
+      <p className="mb-4">This page is not currently in use.</p>
+      <button
+        onClick={() => router.push("/")}
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        Go to Home
+      </button>
+    </main>
+  );
+}
