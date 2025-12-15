@@ -127,7 +127,7 @@ export default function ResultPage() {
         <strong>Rating:</strong> {selectedMovie.vote_average ?? "N/A"}
       </p>
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 mb-4">
         <button
           onClick={pickRandomMovie}
           className="bg-green-600 text-white px-4 py-2 rounded"
@@ -141,6 +141,13 @@ export default function ResultPage() {
           Back to List
         </button>
       </div>
+
+      <button
+        onClick={() => router.push("/")}
+        className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition"
+      >
+        Try Again
+      </button>
     </main>
   );
 }
