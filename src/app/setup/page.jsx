@@ -52,14 +52,17 @@ export default function SetupPage() {
       {/* Numero di film da salvare */}
       <label className="block mb-2">
         Create your list!
-        <input
-          type="number"
-          min="1"
-          max="10"
+        <select
           value={totalMovies}
           onChange={(e) => setTotalMovies(Number(e.target.value))}
-          className="border p-1 ml-2 w-16"
-        />
+          className="border p-1 ml-2"
+        >
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+            <option key={num} value={num}>
+              {num} {num === 1 ? "movie" : "movies"}
+            </option>
+          ))}
+        </select>
       </label>
 
       {/* Selezione del genere */}
