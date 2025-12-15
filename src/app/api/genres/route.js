@@ -4,24 +4,67 @@ const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 export async function GET() {
   try {
+    // Fallback genres se manca API key
+    if (!process.env.TMDB_API_KEY) {
+      console.warn("TMDB_API_KEY not set, returning mock genres");
+      return NextResponse.json({
+        genres: [
+          { id: 28, name: "Action" },
+          { id: 12, name: "Adventure" },
+          { id: 16, name: "Animation" },
+          { id: 35, name: "Comedy" },
+          { id: 80, name: "Crime" },
+          { id: 99, name: "Documentary" },
+          { id: 18, name: "Drama" },
+          { id: 10751, name: "Family" },
+          { id: 14, name: "Fantasy" },
+          { id: 36, name: "History" },
+          { id: 27, name: "Horror" },
+          { id: 10402, name: "Music" },
+          { id: 9648, name: "Mystery" },
+          { id: 10749, name: "Romance" },
+          { id: 878, name: "Science Fiction" },
+          { id: 10770, name: "TV Movie" },
+          { id: 53, name: "Thriller" },
+          { id: 10752, name: "War" },
+          { id: 37, name: "Western" },
+        ],
+      });
+    }
+
     const res = await fetch(
       `${TMDB_BASE_URL}/genre/movie/list?api_key=${process.env.TMDB_API_KEY}&language=it-IT`
     );
 
     if (!res.ok) {
       const text = await res.text();
-      return NextResponse.json(
-        { error: text || "Failed to fetch movie genres" },
-        { status: res.status }
-      );
+      console.error("TMDB API error:", res.status, text);
+      // Return mock genres on error instead of failing
+      return NextResponse.json({
+        genres: [
+          { id: 28, name: "Action" },
+          { id: 35, name: "Comedy" },
+          { id: 18, name: "Drama" },
+          { id: 27, name: "Horror" },
+          { id: 878, name: "Science Fiction" },
+          { id: 53, name: "Thriller" },
+        ],
+      });
     }
 
     const data = await res.json();
     return NextResponse.json(data);
   } catch (err) {
-    return NextResponse.json(
-      { error: err.message || "Server error" },
-      { status: 500 }
-    );
+    console.error("Error in genres API:", err);
+    // Return mock genres on error
+    return NextResponse.json({
+      genres: [
+        { id: 28, name: "Action" },
+        { id: 35, name: "Comedy" },
+        { id: 18, name: "Drama" },
+        { id: 27, name: "Horror" },
+        { id: 878, name: "Science Fiction" },
+      ],
+    });
   }
 }
