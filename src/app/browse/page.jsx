@@ -17,6 +17,14 @@ export default function BrowsePage() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Carica film salvati da localStorage all'avvio
+  useEffect(() => {
+    const stored = localStorage.getItem("savedMovies");
+    if (stored) {
+      setSavedMovies(JSON.parse(stored));
+    }
+  }, []);
+
   // Carica film dall'API
   useEffect(() => {
     async function fetchMovies() {
@@ -39,6 +47,12 @@ export default function BrowsePage() {
 
   // Salva film in localStorage
   const saveMovie = (movie) => {
+    // Controlla se il film è già stato salvato per evitare duplicati
+    if (savedMovies.find((m) => m.id === movie.id)) {
+      alert("Movie already saved!");
+      nextMovie();
+      return;
+    }
     const newSaved = [...savedMovies, movie];
     setSavedMovies(newSaved);
     localStorage.setItem("savedMovies", JSON.stringify(newSaved));

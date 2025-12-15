@@ -7,12 +7,27 @@ import Link from "next/link";
 export default function ListPage() {
   const router = useRouter();
   const [savedMovies, setSavedMovies] = useState([]);
+  const [targetMovies, setTargetMovies] = useState(0);
 
-  // 1️⃣ Carica i film salvati da localStorage
+  // 1️⃣ Carica i film salvati e il target da localStorage
   useEffect(() => {
     const stored = localStorage.getItem("savedMovies");
     if (stored) {
-      setSavedMovies(JSON.parse(stored));
+      const movies = JSON.parse(stored);
+      // Rimuovi duplicati basandosi sull'id
+      const uniqueMovies = movies.filter(
+        (movie, index, self) =>
+          index === self.findIndex((m) => m.id === movie.id)
+      );
+      // Se ci sono duplicati, aggiorna localStorage con la lista pulita
+      if (uniqueMovies.length !== movies.length) {
+        localStorage.setItem("savedMovies", JSON.stringify(uniqueMovies));
+      }
+      setSavedMovies(uniqueMovies);
+    }
+    const target = localStorage.getItem("targetMovies");
+    if (target) {
+      setTargetMovies(Number(target));
     }
   }, []);
 
@@ -35,7 +50,17 @@ export default function ListPage() {
     <main className="p-6 max-w-lg mx-auto">
       <h1 className="text-2xl font-bold mb-4">Saved Movies</h1>
 
-      {savedMovies.length === 0 && <p>No movies saved yet.</p>}
+      {savedMovies.length === 0 && (
+        <div className="text-center">
+          <p className="mb-4">No movies saved yet.</p>
+          <button
+            onClick={() => router.push("/setup")}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+          >
+            Add Movies to List
+          </button>
+        </div>
+      )}
 
       <ul className="space-y-4">
         {savedMovies.map((movie) => (
@@ -63,12 +88,22 @@ export default function ListPage() {
       </ul>
 
       {savedMovies.length > 0 && (
-        <button
-          onClick={handleFinish}
-          className="bg-blue-600 text-white px-4 py-2 rounded mt-6"
-        >
-          Continue to Final Result
-        </button>
+        <div className="flex gap-4 mt-6">
+          {savedMovies.length < targetMovies && (
+            <button
+              onClick={() => router.push("/setup")}
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+            >
+              Add More Movies ({savedMovies.length}/{targetMovies})
+            </button>
+          )}
+          <button
+            onClick={handleFinish}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Continue to Final Result
+          </button>
+        </div>
       )}
     </main>
   );

@@ -30,6 +30,8 @@ export default function SetupPage() {
   const handleStart = () => {
     if (!selectedGenre) return alert("Please select a genre!");
     setLoading(true);
+    // Salva il target di film desiderato in localStorage
+    localStorage.setItem("targetMovies", totalMovies.toString());
     router.push(
       `/browse?genre=${selectedGenre}&rating=${selectedRating}&total=${totalMovies}` // reindirizza alla pagina di navigazione con i parametri selezionati
     );

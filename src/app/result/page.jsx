@@ -143,7 +143,11 @@ export default function ResultPage() {
       </div>
 
       <button
-        onClick={() => router.push("/")}
+        onClick={() => {
+          localStorage.removeItem("savedMovies");
+          localStorage.removeItem("targetMovies");
+          router.push("/");
+        }}
         className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition"
       >
         Try Again
