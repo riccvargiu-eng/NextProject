@@ -131,13 +131,14 @@ export default function BrowsePage() {
         >
           Skip
         </button>
-        <button
-          onClick={() => saveMovie(movie)}
-          className="bg-green-600 text-white px-4 py-2 rounded"
-          disabled={progress >= totalMovies}
-        >
-          Save
-        </button>
+        {progress < totalMovies && (
+          <button
+            onClick={() => saveMovie(movie)}
+            className="bg-green-600 text-white px-4 py-2 rounded"
+          >
+            Save
+          </button>
+        )}
       </div>
 
       <p className="mt-4 text-sm text-gray-500">

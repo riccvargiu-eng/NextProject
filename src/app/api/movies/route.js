@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const MOVIES_PER_PAGE = 20; // max per pagina
-const MAX_PAGES = 25;       // per arrivare fino a 500 film
+const MAX_PAGES = 25; // per arrivare fino a 500 film
 
 export async function GET(request) {
   try {
@@ -38,11 +38,18 @@ export async function GET(request) {
     }
 
     // Soft filter: se il rating richiesto è troppo alto, usa il massimo disponibile
-    const effectiveRating = requestedRating > maxAvailableRating
-      ? maxAvailableRating
-      : requestedRating;
+    const effectiveRating =
+      requestedRating > maxAvailableRating
+        ? maxAvailableRating
+        : requestedRating;
 
     const filtered = allMovies.filter((m) => m.vote_average >= effectiveRating);
+
+    // Randomizza l'ordine dei film usando Fisher-Yates shuffle
+    for (let i = filtered.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+    }
 
     return NextResponse.json({
       results: filtered,
