@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 
-export default function BrowsePage() {
+function BrowseContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -170,5 +170,19 @@ export default function BrowsePage() {
         </button>
       )}
     </main>
+  );
+}
+
+export default function BrowsePage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex items-center justify-center min-h-screen p-6">
+          <p className="text-lg">Loading...</p>
+        </main>
+      }
+    >
+      <BrowseContent />
+    </Suspense>
   );
 }
