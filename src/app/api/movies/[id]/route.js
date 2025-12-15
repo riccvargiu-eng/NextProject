@@ -5,7 +5,9 @@ const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 export async function GET(request, { params }) {
   try {
     const { id } = await params;
-    if (!process.env.TMDB_API_KEY) {
+    const v3 = process.env.TMDB_API_KEY;
+    const v4 = process.env.TMDB_API_READ_ACCESS_TOKEN;
+    if (!v3 && !v4) {
       console.warn(
         "TMDB_API_KEY not set — returning mock movie data for id",
         id
@@ -21,9 +23,18 @@ export async function GET(request, { params }) {
       };
       return NextResponse.json(mock);
     }
-    const res = await fetch(
-      `${TMDB_BASE_URL}/movie/${id}?api_key=${process.env.TMDB_API_KEY}&language=it-IT`
-    );
+    const url = v4
+      ? `${TMDB_BASE_URL}/movie/${id}?language=it-IT`
+      : `${TMDB_BASE_URL}/movie/${id}?api_key=${v3}&language=it-IT`;
+
+    const res = await fetch(url, {
+      headers: v4
+        ? {
+            Authorization: `Bearer ${v4}`,
+            Accept: "application/json",
+          }
+        : undefined,
+    });
 
     if (!res.ok) {
       const text = await res.text();

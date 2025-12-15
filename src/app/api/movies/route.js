@@ -9,6 +9,8 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const genre = searchParams.get("genre");
     const requestedRating = Number(searchParams.get("rating")) || 0;
+    const v3 = process.env.TMDB_API_KEY;
+    const v4 = process.env.TMDB_API_READ_ACCESS_TOKEN;
 
     if (!genre) {
       return NextResponse.json({ results: [], maxAvailableRating: 0 });
@@ -18,9 +20,18 @@ export async function GET(request) {
     let maxAvailableRating = 0;
 
     for (let page = 1; page <= MAX_PAGES; page++) {
-      const res = await fetch(
-        `${TMDB_BASE_URL}/discover/movie?api_key=${process.env.TMDB_API_KEY}&with_genres=${genre}&language=it-IT&vote_count.gte=10&page=${page}`
-      );
+      const url = v4
+        ? `${TMDB_BASE_URL}/discover/movie?with_genres=${genre}&language=it-IT&vote_count.gte=10&page=${page}`
+        : `${TMDB_BASE_URL}/discover/movie?api_key=${v3}&with_genres=${genre}&language=it-IT&vote_count.gte=10&page=${page}`;
+
+      const res = await fetch(url, {
+        headers: v4
+          ? {
+              Authorization: `Bearer ${v4}`,
+              Accept: "application/json",
+            }
+          : undefined,
+      });
 
       if (!res.ok) break; // se errore stop
 

@@ -4,8 +4,10 @@ const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 export async function GET() {
   try {
-    // Fallback genres se manca API key
-    if (!process.env.TMDB_API_KEY) {
+    // Preferisci token v4 se presente, altrimenti v3; se mancano entrambi, fallback mock
+    const v3 = process.env.TMDB_API_KEY;
+    const v4 = process.env.TMDB_API_READ_ACCESS_TOKEN;
+    if (!v3 && !v4) {
       console.warn("TMDB_API_KEY not set, returning mock genres");
       return NextResponse.json({
         genres: [
@@ -32,9 +34,18 @@ export async function GET() {
       });
     }
 
-    const res = await fetch(
-      `${TMDB_BASE_URL}/genre/movie/list?api_key=${process.env.TMDB_API_KEY}&language=it-IT`
-    );
+    const url = v4
+      ? `${TMDB_BASE_URL}/genre/movie/list?language=it-IT`
+      : `${TMDB_BASE_URL}/genre/movie/list?api_key=${v3}&language=it-IT`;
+
+    const res = await fetch(url, {
+      headers: v4
+        ? {
+            Authorization: `Bearer ${v4}`,
+            Accept: "application/json",
+          }
+        : undefined,
+    });
 
     if (!res.ok) {
       const text = await res.text();
