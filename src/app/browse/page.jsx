@@ -17,13 +17,15 @@ export default function BrowsePage() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Carica film salvati da localStorage all'avvio
+  // Carica film salvati da localStorage all'avvio e quando cambiano i parametri
   useEffect(() => {
     const stored = localStorage.getItem("savedMovies");
     if (stored) {
       setSavedMovies(JSON.parse(stored));
+    } else {
+      setSavedMovies([]);
     }
-  }, []);
+  }, [genre, rating, totalMovies]);
 
   // Carica film dall'API
   useEffect(() => {
@@ -93,9 +95,23 @@ export default function BrowsePage() {
   const movie = movies[currentIndex];
   const progress = savedMovies.length;
 
+  const handleReset = () => {
+    localStorage.removeItem("savedMovies");
+    setSavedMovies([]);
+    window.location.reload();
+  };
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-6">
-      <h1 className="text-2xl font-bold mb-4">Browse Movies</h1>
+      <div className="w-full max-w-4xl flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Browse Movies</h1>
+        <button
+          onClick={handleReset}
+          className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded transition"
+        >
+          Reset List
+        </button>
+      </div>
 
       <div className="w-64 h-[384px] relative mb-4">
         {movie.poster_path ? (

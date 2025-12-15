@@ -46,9 +46,32 @@ export default function ListPage() {
     router.push(`/result?ids=${idsParam}`);
   };
 
+  const handleReset = () => {
+    const savedParams = localStorage.getItem("searchParams");
+    if (savedParams) {
+      const params = JSON.parse(savedParams);
+      localStorage.removeItem("savedMovies");
+      router.push(
+        `/browse?genre=${params.genre}&rating=${params.rating}&total=${params.total}`
+      );
+    } else {
+      localStorage.removeItem("savedMovies");
+      localStorage.removeItem("targetMovies");
+      router.push("/setup");
+    }
+  };
+
   return (
     <main className="p-6 max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Saved Movies</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Saved Movies</h1>
+        <button
+          onClick={handleReset}
+          className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded transition"
+        >
+          Reset List
+        </button>
+      </div>
 
       {savedMovies.length === 0 && (
         <div className="text-center">
