@@ -1,45 +1,42 @@
 .card {
   background: #1a1a1a;
   border-radius: 16px;
-  padding: 20px;
+  padding: 16px;
   width: clamp(600px, 80%, 1400px);
-  max-height: 80vh;
+  max-height: 80vh; /* card mai più alta della viewport */
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
-  overflow-y: auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* Horizontal layout: poster, trailer, info */
+/* Riga principale: poster, trailer, info */
 .contentRow {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: stretch;
-  min-height: 0;
+  height: 100%;
 }
 
-/* POSTER - fixed width 200px */
+/* POSTER */
 .posterWrapper {
   position: relative;
   width: 200px;
   aspect-ratio: 2 / 3;
   flex-shrink: 0;
-  border-radius: 12px;
-  overflow: hidden;
 }
 
 .poster {
   object-fit: cover;
+  border-radius: 12px;
 }
 
-/* TRAILER - flex-grow */
+/* TRAILER */
 .trailerWrapper {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 0;
 }
 
 .trailerPlaceholder {
@@ -50,97 +47,53 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #333;
+  color: #777;
+  font-size: 14px;
 }
 
-.trailerText {
-  color: #666;
-  font-size: 16px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* INFO - fixed width 300px */
+/* INFO */
 .info {
   width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  flex-shrink: 0;
 }
 
 .title {
-  font-size: 22px;
-  font-weight: 700;
-  margin: 0;
-  color: #fff;
-  line-height: 1.3;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
 .overview {
   font-size: 14px;
   color: #ccc;
-  line-height: 1.6;
-  margin: 0;
-  flex: 1;
-  overflow-y: auto;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .rating {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 16px;
-  color: #fbbf24;
-  font-weight: 600;
   margin-top: auto;
+  font-size: 14px;
+  color: #aaa;
 }
 
-.ratingIcon {
-  font-size: 20px;
+/* AZIONI */
+.actions {
+  margin-top: 16px;
 }
 
-.ratingValue {
-  color: #fff;
+.actions button {
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
 }
 
-/* Responsive - mobile stacks vertically */
-@media (max-width: 768px) {
-  .card {
-    width: 90%;
-    padding: 16px;
-    max-height: 85vh;
-  }
-
-  .contentRow {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .posterWrapper {
-    width: 120px;
-    align-self: center;
-  }
-
-  .trailerWrapper {
-    width: 100%;
-  }
-
-  .info {
-    width: 100%;
-  }
-
-  .title {
-    font-size: 18px;
-    text-align: center;
-  }
-
-  .overview {
-    font-size: 13px;
-  }
-
-  .rating {
-    justify-content: center;
-  }
+.actions button:hover {
+  background: #1d4ed8;
 }

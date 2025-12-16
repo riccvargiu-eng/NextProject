@@ -83,69 +83,61 @@ function BrowseContent() {
   const movie = movies[currentIndex];
   const progress = savedMovies.length;
 
-  const handleReset = () => {
-    localStorage.removeItem("savedMovies");
-    setSavedMovies([]);
-    setCurrentIndex(0);
-  };
-
   return (
-    <main className="flex flex-col min-h-screen w-full">
+    <main className="flex flex-col items-center justify-center min-h-screen w-full py-4">
       {/* HEADER */}
-      <header className="w-full flex justify-between items-center px-6 py-4 bg-gray-900 border-b border-gray-700">
-        <h1 className="text-2xl font-bold text-white">Browse Movies</h1>
+      <div className="w-full max-w-6xl flex justify-between items-center mb-4 px-4">
+        <h1 className="text-xl font-bold">Browse Movies</h1>
         <button
-          onClick={handleReset}
-          className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg transition-colors"
+          onClick={() => {
+            localStorage.removeItem("savedMovies");
+            setSavedMovies([]);
+            setCurrentIndex(0);
+          }}
+          className="bg-orange-600 text-white px-3 py-1.5 rounded"
         >
           Reset
         </button>
-      </header>
+      </div>
 
-      {/* CARD AREA - vertically centered */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-8">
-        <MovieCard movie={movie} />
+      {/* CARD e azioni centrati verticalmente */}
+      <div className="flex flex-col items-center justify-center flex-grow w-full px-4">
+        <MovieCard
+          movie={movie}
+          actionLabel="Save"
+          onPrimaryAction={() => saveMovie(movie)}
+        />
 
-        {/* ACTIONS BELOW CARD */}
-        <div className="flex flex-col items-center gap-4 mt-6 w-full max-w-2xl">
-          <div className="flex gap-4 flex-wrap justify-center">
+        <div className="flex gap-4 mt-4">
+          <button
+            onClick={nextMovie}
+            className="bg-gray-400 text-white px-4 py-2 rounded"
+          >
+            Skip
+          </button>
+
+          {progress < totalMovies && (
             <button
-              onClick={nextMovie}
-              className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg transition-colors font-medium"
+              onClick={() => saveMovie(movie)}
+              className="bg-green-600 text-white px-4 py-2 rounded"
             >
-              Skip
-            </button>
-
-            {progress < totalMovies && (
-              <button
-                onClick={() => saveMovie(movie)}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors font-medium"
-              >
-                Save
-              </button>
-            )}
-
-            <button
-              onClick={handleReset}
-              className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg transition-colors font-medium"
-            >
-              Reset
-            </button>
-          </div>
-
-          <p className="text-sm text-gray-400 font-medium">
-            Saved {progress} of {totalMovies}
-          </p>
-
-          {progress >= totalMovies && (
-            <button
-              onClick={() => router.push("/list")}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-colors font-medium text-lg"
-            >
-              Go to List
+              Save
             </button>
           )}
         </div>
+
+        <p className="mt-2 text-sm text-gray-500">
+          Saved {progress} of {totalMovies}
+        </p>
+
+        {progress >= totalMovies && (
+          <button
+            onClick={() => router.push("/list")}
+            className="mt-2 bg-blue-600 text-white px-4 py-2 rounded"
+          >
+            Go to List
+          </button>
+        )}
       </div>
     </main>
   );

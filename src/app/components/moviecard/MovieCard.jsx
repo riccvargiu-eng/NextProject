@@ -3,13 +3,14 @@
 import Image from "next/image";
 import styles from "./MovieCard.module.css";
 
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie, onPrimaryAction, actionLabel }) {
   if (!movie) return null;
 
   return (
     <div className={styles.card}>
+      {/* Riga principale: poster, trailer, info */}
       <div className={styles.contentRow}>
-        {/* POSTER - fixed width 200px */}
+        {/* POSTER */}
         {movie.poster_path && (
           <div className={styles.posterWrapper}>
             <Image
@@ -17,33 +18,35 @@ export default function MovieCard({ movie }) {
               alt={movie.title}
               fill
               className={styles.poster}
-              sizes="(max-width: 768px) 120px, 200px"
-              priority
+              sizes="200px"
             />
           </div>
         )}
 
-        {/* TRAILER - flex-grow */}
+        {/* TRAILER */}
         <div className={styles.trailerWrapper}>
-          <div className={styles.trailerPlaceholder}>
-            <span className={styles.trailerText}>Trailer Placeholder</span>
-          </div>
+          {/* Placeholder per iframe YouTube */}
+          <div className={styles.trailerPlaceholder}>Trailer</div>
         </div>
 
-        {/* INFO - fixed width 300px */}
+        {/* INFO */}
         <div className={styles.info}>
           <h2 className={styles.title}>{movie.title}</h2>
           <p className={styles.overview}>
             {movie.overview || "No description available."}
           </p>
-          <div className={styles.rating}>
-            <span className={styles.ratingIcon}>⭐</span>
-            <span className={styles.ratingValue}>
-              {movie.vote_average?.toFixed(1) ?? "N/A"}
-            </span>
-          </div>
+          <p className={styles.rating}>
+            ⭐ {movie.vote_average?.toFixed(1) ?? "N/A"}
+          </p>
         </div>
       </div>
+
+      {/* AZIONI */}
+      {onPrimaryAction && (
+        <div className={styles.actions}>
+          <button onClick={onPrimaryAction}>{actionLabel || "Action"}</button>
+        </div>
+      )}
     </div>
   );
 }
