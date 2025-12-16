@@ -1,5 +1,9 @@
 # 🎬 FilmPicker — User Story & How It Works
 
+## 🔗 Link
+
+https://film-picker.vercel.app/
+
 ## 📒 User Story
 
 As a user who is unsure which movie to watch, I want to select my favorite movies from a random list and receive a random recommendation from them, so that I can easily decide what to watch without scrolling for hours on streaming sites!
