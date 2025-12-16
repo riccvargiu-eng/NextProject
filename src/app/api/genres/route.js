@@ -4,7 +4,6 @@ const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 export async function GET() {
   try {
-    // Preferisci token v4 se presente, altrimenti v3; se mancano entrambi, fallback mock
     const v3 = process.env.TMDB_API_KEY;
     const v4 = process.env.TMDB_API_READ_ACCESS_TOKEN;
     if (!v3 && !v4) {
@@ -50,7 +49,6 @@ export async function GET() {
     if (!res.ok) {
       const text = await res.text();
       console.error("TMDB API error:", res.status, text);
-      // Return mock genres on error instead of failing
       return NextResponse.json({
         genres: [
           { id: 28, name: "Action" },
@@ -67,7 +65,6 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (err) {
     console.error("Error in genres API:", err);
-    // Return mock genres on error
     return NextResponse.json({
       genres: [
         { id: 28, name: "Action" },

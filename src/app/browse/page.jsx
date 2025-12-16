@@ -22,13 +22,11 @@ function BrowseContent() {
   const movie = movies[currentIndex] || null;
   const progress = savedMovies.length;
 
-  // Carica film salvati
   useEffect(() => {
     const stored = localStorage.getItem("savedMovies");
     setSavedMovies(stored ? JSON.parse(stored) : []);
   }, [genre, rating, totalMovies]);
 
-  // Fetch film
   useEffect(() => {
     async function fetchMovies() {
       if (!genre) return;
@@ -48,12 +46,10 @@ function BrowseContent() {
     fetchMovies();
   }, [genre, rating]);
 
-  // Fetch trailer e cast quando cambia il film
   useEffect(() => {
     async function fetchTrailerAndCast() {
       if (!movie?.id) return;
       try {
-        // Fetch trailer
         const res = await fetch(
           `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${
             process.env.NEXT_PUBLIC_TMDB_API_KEY || ""
@@ -65,7 +61,6 @@ function BrowseContent() {
         );
         setTrailerKey(trailer?.key || null);
 
-        // Fetch cast
         const castRes = await fetch(
           `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${
             process.env.NEXT_PUBLIC_TMDB_API_KEY || ""

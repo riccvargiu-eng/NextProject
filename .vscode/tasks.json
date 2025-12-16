@@ -1,0 +1,10 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Apply comment cleanup",
+			"type": "shell",
+			"command": "echo Cleanup planned; no runtime changes"
+		}
+	]
+}

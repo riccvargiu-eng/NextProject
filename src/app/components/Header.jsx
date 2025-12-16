@@ -7,20 +7,16 @@ export default function Header() {
   const router = useRouter();
 
   const handleHomeClick = () => {
-    // Svuota il localStorage e vai alla home
     localStorage.removeItem("savedMovies");
     localStorage.removeItem("targetMovies");
     router.push("/");
   };
 
   const handleReset = () => {
-    // Recupera i parametri di ricerca salvati
     const savedParams = localStorage.getItem("searchParams");
     if (savedParams) {
       const params = JSON.parse(savedParams);
-      // Svuota solo la lista salvata, mantieni i parametri
       localStorage.removeItem("savedMovies");
-      // Se sei già sulla pagina browse, ricarica per aggiornare lo stato
       if (window.location.pathname === "/browse") {
         window.location.reload();
       } else {
@@ -29,7 +25,6 @@ export default function Header() {
         );
       }
     } else {
-      // Se non ci sono parametri salvati, vai al setup
       localStorage.removeItem("savedMovies");
       localStorage.removeItem("targetMovies");
       router.push("/setup");

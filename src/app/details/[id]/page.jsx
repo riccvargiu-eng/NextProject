@@ -42,7 +42,6 @@ export default function DetailsPage({ params: paramsPromise }) {
     if (!movieId) return;
     async function fetchCastAndVideos() {
       try {
-        // Fetch cast directly from TMDB API
         const creditsRes = await fetch(
           `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${
             process.env.NEXT_PUBLIC_TMDB_API_KEY || ""
@@ -53,7 +52,6 @@ export default function DetailsPage({ params: paramsPromise }) {
           setCast(creditsData.cast || []);
         }
 
-        // Fetch videos directly from TMDB API
         const videosRes = await fetch(
           `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${
             process.env.NEXT_PUBLIC_TMDB_API_KEY || ""

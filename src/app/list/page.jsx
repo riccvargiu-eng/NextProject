@@ -10,17 +10,14 @@ export default function ListPage() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [targetMovies, setTargetMovies] = useState(0);
 
-  // 1️⃣ Carica i film salvati e il target da localStorage
   useEffect(() => {
     const stored = localStorage.getItem("savedMovies");
     if (stored) {
       const movies = JSON.parse(stored);
-      // Rimuovi duplicati basandosi sull'id
       const uniqueMovies = movies.filter(
         (movie, index, self) =>
           index === self.findIndex((m) => m.id === movie.id)
       );
-      // Se ci sono duplicati, aggiorna localStorage con la lista pulita
       if (uniqueMovies.length !== movies.length) {
         localStorage.setItem("savedMovies", JSON.stringify(uniqueMovies));
       }
@@ -32,17 +29,14 @@ export default function ListPage() {
     }
   }, []);
 
-  // 2️⃣ Rimuovi film dalla lista
   const handleRemove = (id) => {
     const updated = savedMovies.filter((m) => m.id !== id);
     setSavedMovies(updated);
     localStorage.setItem("savedMovies", JSON.stringify(updated));
   };
 
-  // 3️⃣ Vai alla pagina finale con film selezionati
   const handleFinish = () => {
     if (savedMovies.length === 0) return;
-    // Passiamo gli ID dei film come query params
     const idsParam = savedMovies.map((m) => m.id).join(",");
     router.push(`/result?ids=${idsParam}`);
   };
