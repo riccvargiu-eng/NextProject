@@ -7,6 +7,8 @@ import Image from "next/image";
 export default function DetailsPage({ params: paramsPromise }) {
   const router = useRouter();
   const [movie, setMovie] = useState(null);
+  const [cast, setCast] = useState([]);
+  const [trailerKey, setTrailerKey] = useState(null);
   const [loading, setLoading] = useState(true);
   const [movieId, setMovieId] = useState(null);
 
@@ -33,6 +35,39 @@ export default function DetailsPage({ params: paramsPromise }) {
       }
     }
     fetchMovie();
+  }, [movieId]);
+
+  useEffect(() => {
+    if (!movieId) return;
+    async function fetchCastAndVideos() {
+      try {
+        // Fetch cast
+        const creditsRes = await fetch(`/api/movies/${movieId}/credits`);
+        if (creditsRes.ok) {
+          const creditsData = await creditsRes.json();
+          setCast(creditsData.cast || []);
+        }
+
+        // Fetch videos directly from TMDB API
+        const videosRes = await fetch(
+          `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${
+            process.env.NEXT_PUBLIC_TMDB_API_KEY || ""
+          }`
+        );
+        if (videosRes.ok) {
+          const videosData = await videosRes.json();
+          const trailer = videosData.results?.find(
+            (v) => v.type === "Trailer" && v.site === "YouTube"
+          );
+          if (trailer) {
+            setTrailerKey(trailer.key);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching cast/videos:", err);
+      }
+    }
+    fetchCastAndVideos();
   }, [movieId]);
 
   if (loading) {
@@ -97,6 +132,53 @@ export default function DetailsPage({ params: paramsPromise }) {
           </p>
         </div>
       </div>
+
+      {/* Cast Section */}
+      {cast.length > 0 && (
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-6 text-center">Cast</h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            {cast.slice(0, 12).map((actor) => (
+              <div
+                key={actor.id}
+                className="w-32 text-center flex flex-col items-center"
+              >
+                {actor.profile_path && (
+                  <div className="relative w-32 h-48 mb-2">
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                      alt={actor.name}
+                      fill
+                      className="rounded-lg shadow object-cover"
+                    />
+                  </div>
+                )}
+                <p className="font-semibold text-sm">{actor.name}</p>
+                <p className="text-xs text-gray-400">{actor.character}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Trailer Section */}
+      {trailerKey && (
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-6 text-center">Trailer</h2>
+          <div className="flex justify-center">
+            <iframe
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${trailerKey}`}
+              title="Movie Trailer"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="rounded-lg shadow"
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }
