@@ -3,12 +3,7 @@
 import Image from "next/image";
 import styles from "./MovieCard.module.css";
 
-export default function MovieCard({
-  movie,
-  onPrimaryAction,
-  actionLabel,
-  trailerKey,
-}) {
+export default function MovieCard({ movie, trailerKey }) {
   if (!movie) return null;
 
   return (
@@ -57,13 +52,6 @@ export default function MovieCard({
           </p>
         </div>
       </div>
-
-      {/* AZIONI */}
-      {onPrimaryAction && (
-        <div className={styles.actions}>
-          <button onClick={onPrimaryAction}>{actionLabel || "Action"}</button>
-        </div>
-      )}
     </div>
   );
 }

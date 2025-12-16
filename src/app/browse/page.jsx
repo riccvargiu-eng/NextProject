@@ -114,12 +114,7 @@ function BrowseContent() {
     >
       {/* CARD e azioni centrati verticalmente */}
       <div className="flex flex-col items-center justify-center flex-grow w-full px-4 gap-4">
-        <MovieCard
-          movie={movie}
-          actionLabel="Save"
-          onPrimaryAction={() => saveMovie(movie)}
-          trailerKey={trailerKey}
-        />
+        <MovieCard movie={movie} trailerKey={trailerKey} />
 
         <div className="flex gap-3 flex-wrap justify-center">
           <button

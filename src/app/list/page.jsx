@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ListPage() {
   const router = useRouter();
@@ -62,8 +63,8 @@ export default function ListPage() {
   };
 
   return (
-    <main className="p-6 max-w-lg mx-auto">
-      <div className="flex justify-between items-center mb-4">
+    <main className="p-6 max-w-6xl mx-auto">
+      <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Saved Movies</h1>
         <button
           onClick={handleReset}
@@ -85,33 +86,58 @@ export default function ListPage() {
         </div>
       )}
 
-      <ul className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {savedMovies.map((movie) => (
-          <li key={movie.id} className="border p-4 rounded shadow">
-            {/* Titolo cliccabile per aprire i dettagli */}
-            <h3 className="text-lg font-semibold">
-              <Link
-                href={`/details/${movie.id}`}
-                className="text-blue-600 underline"
-              >
-                {movie.title}
-              </Link>
-            </h3>
+          <div
+            key={movie.id}
+            className="border p-4 rounded shadow bg-gray-900 text-white flex flex-col h-full"
+          >
+            {/* Titolo - fixed height section */}
+            <div className="h-16 flex items-center mb-3">
+              <h3 className="text-lg font-semibold">
+                <Link
+                  href={`/details/${movie.id}`}
+                  className="text-blue-400 underline"
+                >
+                  {movie.title}
+                </Link>
+              </h3>
+            </div>
 
-            <p className="text-sm text-gray-600">{movie.overview}</p>
+            {/* Poster - fixed height section */}
+            <div className="mb-3">
+              {movie.poster_path && (
+                <div className="relative w-full aspect-[2/3]">
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                    fill
+                    className="rounded object-cover"
+                  />
+                </div>
+              )}
+            </div>
 
+            {/* Description - flexible section */}
+            <div className="flex-1 mb-4">
+              <p className="text-sm text-gray-300 line-clamp-4 h-24 overflow-hidden">
+                {movie.overview}
+              </p>
+            </div>
+
+            {/* Remove button - fixed at bottom */}
             <button
               onClick={() => handleRemove(movie.id)}
-              className="bg-red-600 mt-2 text-white px-3 py-1 rounded"
+              className="bg-red-600 text-white px-3 py-2 rounded self-start"
             >
               Remove
             </button>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
 
       {savedMovies.length > 0 && (
-        <div className="flex gap-4 mt-6">
+        <div className="flex gap-4 mt-6 flex-wrap">
           {savedMovies.length < targetMovies && (
             <button
               onClick={() => router.push("/setup")}
