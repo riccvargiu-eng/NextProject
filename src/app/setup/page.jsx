@@ -47,10 +47,10 @@ export default function SetupPage() {
 
   return (
     <main className="p-6 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Setup Filters</h1>
+      <h1 className="text-2xl font-bold mb-12 text-center">Setup Filters</h1>
 
       {/* Numero di film da salvare */}
-      <label className="block mb-2">
+      <label className="block mb-8">
         Create your list!
         <select
           value={totalMovies}
@@ -66,7 +66,7 @@ export default function SetupPage() {
       </label>
 
       {/* Selezione del genere */}
-      <label className="block mb-4">
+      <label className="block mb-8">
         Genre:
         <select
           value={selectedGenre}
@@ -83,7 +83,7 @@ export default function SetupPage() {
       </label>
 
       {/* Slider rating */}
-      <label className="block mb-4">
+      <label className="block mb-8">
         Minimum rating: {selectedRating.toFixed(1)}
         <input
           type="range"
@@ -97,12 +97,14 @@ export default function SetupPage() {
       </label>
 
       {/* Pulsante start */}
-      <button
-        onClick={handleStart}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Start
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={handleStart}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Start
+        </button>
+      </div>
 
       {loading && <p className="mt-2 text-sm text-gray-500">Loading...</p>}
     </main>

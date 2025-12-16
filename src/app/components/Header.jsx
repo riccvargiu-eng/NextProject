@@ -43,7 +43,7 @@ export default function Header() {
           onClick={handleHomeClick}
           className="text-xl font-bold hover:text-gray-300 cursor-pointer"
         >
-          Movie Picker
+          Film Picker
         </button>
         <div className="flex gap-3">
           <button

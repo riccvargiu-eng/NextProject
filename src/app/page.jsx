@@ -26,7 +26,7 @@ export default function Home() {
       </h1>
 
       <p className="mb-6 text-center text-gray-700 dark:text-gray-300 max-w-md">
-        Unsure what movie to watch? Use Film Picker to select your favorite
+        Unsure what movie to watch? <br /> Use Film Picker to select your favorite
         movies from a list and get a random recommendation!
       </p>
 
