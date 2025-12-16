@@ -125,6 +125,19 @@ export default function ListPage() {
               </p>
             </div>
 
+            {/* Cast Preview - fixed section */}
+            {movie.cast && movie.cast.length > 0 && (
+              <div className="mb-4 text-xs">
+                <p className="font-semibold mb-1">Cast:</p>
+                <p className="text-gray-400 line-clamp-2">
+                  {movie.cast
+                    .slice(0, 3)
+                    .map((a) => a.name)
+                    .join(", ")}
+                </p>
+              </div>
+            )}
+
             {/* Remove button - fixed at bottom */}
             <button
               onClick={() => handleRemove(movie.id)}

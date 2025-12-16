@@ -17,6 +17,7 @@ function BrowseContent() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [trailerKey, setTrailerKey] = useState(null);
+  const [cast, setCast] = useState([]);
 
   const movie = movies[currentIndex] || null;
   const progress = savedMovies.length;
@@ -47,11 +48,12 @@ function BrowseContent() {
     fetchMovies();
   }, [genre, rating]);
 
-  // Fetch trailer quando cambia il film
+  // Fetch trailer e cast quando cambia il film
   useEffect(() => {
-    async function fetchTrailer() {
+    async function fetchTrailerAndCast() {
       if (!movie?.id) return;
       try {
+        // Fetch trailer
         const res = await fetch(
           `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${
             process.env.NEXT_PUBLIC_TMDB_API_KEY || ""
@@ -62,12 +64,22 @@ function BrowseContent() {
           (video) => video.type === "Trailer" && video.site === "YouTube"
         );
         setTrailerKey(trailer?.key || null);
+
+        // Fetch cast
+        const castRes = await fetch(
+          `https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${
+            process.env.NEXT_PUBLIC_TMDB_API_KEY || ""
+          }`
+        );
+        const castData = await castRes.json();
+        setCast(castData.cast?.slice(0, 5) || []);
       } catch (err) {
-        console.error("Error fetching trailer:", err);
+        console.error("Error fetching trailer/cast:", err);
         setTrailerKey(null);
+        setCast([]);
       }
     }
-    fetchTrailer();
+    fetchTrailerAndCast();
   }, [movie?.id]);
 
   const nextMovie = () => {
@@ -114,7 +126,7 @@ function BrowseContent() {
     >
       {/* CARD e azioni centrati verticalmente */}
       <div className="flex flex-col items-center justify-center flex-grow w-full px-4 gap-4">
-        <MovieCard movie={movie} trailerKey={trailerKey} />
+        <MovieCard movie={movie} trailerKey={trailerKey} cast={cast} />
 
         <div className="flex gap-3 flex-wrap justify-center">
           <button

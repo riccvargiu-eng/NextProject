@@ -18,6 +18,7 @@ function ResultContent() {
   const router = useRouter();
 
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [cast, setCast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [shownIds, setShownIds] = useState([]);
   const [shuffledIds, setShuffledIds] = useState([]);
@@ -62,6 +63,18 @@ function ResultContent() {
       if (!res.ok) throw new Error("Failed to fetch movie details");
       const movie = await res.json();
       setSelectedMovie(movie);
+
+      // Fetch cast
+      const castRes = await fetch(
+        `https://api.themoviedb.org/3/movie/${nextId}/credits?api_key=${
+          process.env.NEXT_PUBLIC_TMDB_API_KEY || ""
+        }`
+      );
+      if (castRes.ok) {
+        const castData = await castRes.json();
+        setCast(castData.cast?.slice(0, 8) || []);
+      }
+
       setShownIds((prev) => [...prev, nextId]);
     } catch (err) {
       console.error("Failed to fetch movie details:", err);
@@ -126,6 +139,31 @@ function ResultContent() {
       <p className="mb-4">
         <strong>Rating:</strong> {selectedMovie.vote_average ?? "N/A"}
       </p>
+
+      {/* Cast Section */}
+      {cast.length > 0 && (
+        <div className="w-full mb-6">
+          <h3 className="text-xl font-bold mb-4 text-center">Cast</h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            {cast.map((actor) => (
+              <div key={actor.id} className="text-center">
+                {actor.profile_path && (
+                  <div className="relative w-24 h-32 mb-2">
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                      alt={actor.name}
+                      fill
+                      className="rounded object-cover"
+                    />
+                  </div>
+                )}
+                <p className="font-semibold text-sm">{actor.name}</p>
+                <p className="text-xs text-gray-400">{actor.character}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="flex gap-4 mb-4">
         <button

@@ -101,6 +101,23 @@
   color: #aaa;
 }
 
+.castPreview {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.castLabel {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.castNames {
+  color: #999;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 /* AZIONI */
 .actions {
   margin-top: 16px;

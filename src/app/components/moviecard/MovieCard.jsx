@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styles from "./MovieCard.module.css";
 
-export default function MovieCard({ movie, trailerKey }) {
+export default function MovieCard({ movie, trailerKey, cast }) {
   if (!movie) return null;
 
   return (
@@ -50,6 +50,17 @@ export default function MovieCard({ movie, trailerKey }) {
           <p className={styles.rating}>
             ⭐ {movie.vote_average?.toFixed(1) ?? "N/A"}
           </p>
+          {cast && cast.length > 0 && (
+            <div className={styles.castPreview}>
+              <p className={styles.castLabel}>Cast:</p>
+              <p className={styles.castNames}>
+                {cast
+                  .slice(0, 3)
+                  .map((a) => a.name)
+                  .join(", ")}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
