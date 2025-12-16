@@ -21,8 +21,8 @@ export async function GET(request) {
 
     for (let page = 1; page <= MAX_PAGES; page++) {
       const url = v4
-        ? `${TMDB_BASE_URL}/discover/movie?with_genres=${genre}&language=it-IT&vote_count.gte=10&page=${page}`
-        : `${TMDB_BASE_URL}/discover/movie?api_key=${v3}&with_genres=${genre}&language=it-IT&vote_count.gte=10&page=${page}`;
+        ? `${TMDB_BASE_URL}/discover/movie?with_genres=${genre}&language=it-IT&vote_count.gte=10&include_adult=false&page=${page}`
+        : `${TMDB_BASE_URL}/discover/movie?api_key=${v3}&with_genres=${genre}&language=it-IT&vote_count.gte=10&include_adult=false&page=${page}`;
 
       const res = await fetch(url, {
         headers: v4
@@ -54,7 +54,9 @@ export async function GET(request) {
         ? maxAvailableRating
         : requestedRating;
 
-    const filtered = allMovies.filter((m) => m.vote_average >= effectiveRating);
+    const filtered = allMovies.filter(
+      (m) => m.vote_average >= effectiveRating && m.adult !== true
+    );
 
     // Randomizza l'ordine dei film usando Fisher-Yates shuffle
     for (let i = filtered.length - 1; i > 0; i--) {
