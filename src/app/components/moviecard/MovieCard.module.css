@@ -1,0 +1,99 @@
+.card {
+  background: #1a1a1a;
+  border-radius: 16px;
+  padding: 16px;
+  width: clamp(600px, 80%, 1400px);
+  max-height: 80vh; /* card mai più alta della viewport */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Riga principale: poster, trailer, info */
+.contentRow {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  height: 100%;
+}
+
+/* POSTER */
+.posterWrapper {
+  position: relative;
+  width: 200px;
+  aspect-ratio: 2 / 3;
+  flex-shrink: 0;
+}
+
+.poster {
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* TRAILER */
+.trailerWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trailerPlaceholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+  font-size: 14px;
+}
+
+/* INFO */
+.info {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.overview {
+  font-size: 14px;
+  color: #ccc;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rating {
+  margin-top: auto;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* AZIONI */
+.actions {
+  margin-top: 16px;
+}
+
+.actions button {
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.actions button:hover {
+  background: #1d4ed8;
+}

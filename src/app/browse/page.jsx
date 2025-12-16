@@ -1,8 +1,8 @@
 "use client";
 
+import MovieCard from "@/app/components/moviecard/MovieCard";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import Image from "next/image";
 
 function BrowseContent() {
   const searchParams = useSearchParams();
@@ -17,17 +17,13 @@ function BrowseContent() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Carica film salvati da localStorage all'avvio e quando cambiano i parametri
+  // Carica film salvati
   useEffect(() => {
     const stored = localStorage.getItem("savedMovies");
-    if (stored) {
-      setSavedMovies(JSON.parse(stored));
-    } else {
-      setSavedMovies([]);
-    }
+    setSavedMovies(stored ? JSON.parse(stored) : []);
   }, [genre, rating, totalMovies]);
 
-  // Carica film dall'API
+  // Fetch film
   useEffect(() => {
     async function fetchMovies() {
       if (!genre) return;
@@ -39,7 +35,7 @@ function BrowseContent() {
           throw new Error(data.error || "Failed to fetch movies");
         setMovies(data.results);
       } catch (err) {
-        console.error("Error fetching movies:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -47,32 +43,24 @@ function BrowseContent() {
     fetchMovies();
   }, [genre, rating]);
 
-  // Salva film in localStorage
+  const nextMovie = () => {
+    setCurrentIndex((prev) => (prev + 1 < movies.length ? prev + 1 : 0));
+  };
+
   const saveMovie = (movie) => {
-    // Controlla se il film è già stato salvato per evitare duplicati
-    if (savedMovies.find((m) => m.id === movie.id)) {
-      alert("Movie already saved!");
+    if (savedMovies.some((m) => m.id === movie.id)) {
       nextMovie();
       return;
     }
-    const newSaved = [...savedMovies, movie];
-    setSavedMovies(newSaved);
-    localStorage.setItem("savedMovies", JSON.stringify(newSaved));
+    const updated = [...savedMovies, movie];
+    setSavedMovies(updated);
+    localStorage.setItem("savedMovies", JSON.stringify(updated));
     nextMovie();
-  };
-
-  const nextMovie = () => {
-    if (currentIndex + 1 < movies.length) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      // Se finiti i film, ricomincia o mostra messaggio
-      setCurrentIndex(0);
-    }
   };
 
   if (!genre) {
     return (
-      <main className="flex flex-col items-center justify-center min-h-screen p-6">
+      <main className="flex flex-col items-center justify-center h-screen w-full">
         <h1 className="text-2xl font-bold mb-4">No genre selected</h1>
         <button
           onClick={() => router.push("/setup")}
@@ -86,7 +74,7 @@ function BrowseContent() {
 
   if (loading || movies.length === 0) {
     return (
-      <main className="flex flex-col items-center justify-center min-h-screen p-6">
+      <main className="flex items-center justify-center h-screen w-full">
         <p className="text-lg">Loading movies...</p>
       </main>
     );
@@ -95,80 +83,62 @@ function BrowseContent() {
   const movie = movies[currentIndex];
   const progress = savedMovies.length;
 
-  const handleReset = () => {
-    localStorage.removeItem("savedMovies");
-    setSavedMovies([]);
-    window.location.reload();
-  };
-
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6">
-      <div className="w-full max-w-4xl flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Browse Movies</h1>
+    <main className="flex flex-col items-center justify-center min-h-screen w-full py-4">
+      {/* HEADER */}
+      <div className="w-full max-w-6xl flex justify-between items-center mb-4 px-4">
+        <h1 className="text-xl font-bold">Browse Movies</h1>
         <button
-          onClick={handleReset}
-          className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded transition"
+          onClick={() => {
+            localStorage.removeItem("savedMovies");
+            setSavedMovies([]);
+            setCurrentIndex(0);
+          }}
+          className="bg-orange-600 text-white px-3 py-1.5 rounded"
         >
-          Reset List
+          Reset
         </button>
       </div>
 
-      <div className="w-64 h-[384px] relative mb-4">
-        {movie.poster_path ? (
-          <Image
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            alt={movie.title}
-            fill
-            className="rounded-lg shadow object-cover"
-            priority
-          />
-        ) : (
-          <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-            No Image
-          </div>
-        )}
-      </div>
+      {/* CARD e azioni centrati verticalmente */}
+      <div className="flex flex-col items-center justify-center flex-grow w-full px-4">
+        <MovieCard
+          movie={movie}
+          actionLabel="Save"
+          onPrimaryAction={() => saveMovie(movie)}
+        />
 
-      <h2 className="text-xl font-semibold mb-2">{movie.title}</h2>
-      <p className="mb-2">
-        <strong>Overview:</strong> {movie.overview}
-      </p>
-      <p className="mb-2">
-        <strong>Release:</strong> {movie.release_date}
-      </p>
-      <p className="mb-2">
-        <strong>Rating:</strong> {movie.vote_average}
-      </p>
-
-      <div className="flex gap-4 mt-4">
-        <button
-          onClick={nextMovie}
-          className="bg-gray-400 text-white px-4 py-2 rounded"
-        >
-          Skip
-        </button>
-        {progress < totalMovies && (
+        <div className="flex gap-4 mt-4">
           <button
-            onClick={() => saveMovie(movie)}
-            className="bg-green-600 text-white px-4 py-2 rounded"
+            onClick={nextMovie}
+            className="bg-gray-400 text-white px-4 py-2 rounded"
           >
-            Save
+            Skip
+          </button>
+
+          {progress < totalMovies && (
+            <button
+              onClick={() => saveMovie(movie)}
+              className="bg-green-600 text-white px-4 py-2 rounded"
+            >
+              Save
+            </button>
+          )}
+        </div>
+
+        <p className="mt-2 text-sm text-gray-500">
+          Saved {progress} of {totalMovies}
+        </p>
+
+        {progress >= totalMovies && (
+          <button
+            onClick={() => router.push("/list")}
+            className="mt-2 bg-blue-600 text-white px-4 py-2 rounded"
+          >
+            Go to List
           </button>
         )}
       </div>
-
-      <p className="mt-4 text-sm text-gray-500">
-        Saved {progress} of {totalMovies} movies
-      </p>
-
-      {progress >= totalMovies && (
-        <button
-          onClick={() => router.push("/list")}
-          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          Go to List
-        </button>
-      )}
     </main>
   );
 }
@@ -177,7 +147,7 @@ export default function BrowsePage() {
   return (
     <Suspense
       fallback={
-        <main className="flex items-center justify-center min-h-screen p-6">
+        <main className="flex items-center justify-center h-screen w-full">
           <p className="text-lg">Loading...</p>
         </main>
       }
