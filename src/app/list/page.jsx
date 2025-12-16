@@ -63,12 +63,12 @@ export default function ListPage() {
   };
 
   return (
-    <main className="p-6 max-w-6xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Saved Movies</h1>
+    <main className="p-4 sm:p-6 max-w-6xl mx-auto">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Saved Movies</h1>
         <button
           onClick={handleReset}
-          className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded transition"
+          className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded text-sm sm:text-base transition"
         >
           Reset List
         </button>
@@ -141,7 +141,7 @@ export default function ListPage() {
             {/* Remove button - fixed at bottom */}
             <button
               onClick={() => handleRemove(movie.id)}
-              className="bg-red-600 text-white px-3 py-2 rounded self-start"
+              className="bg-red-600 text-white px-3 py-2 rounded self-start text-sm sm:text-base hover:bg-red-700 transition"
             >
               Remove
             </button>
@@ -150,18 +150,18 @@ export default function ListPage() {
       </div>
 
       {savedMovies.length > 0 && (
-        <div className="flex gap-4 mt-6 flex-wrap">
+        <div className="flex gap-3 sm:gap-4 mt-6 flex-wrap justify-center sm:justify-start">
           {savedMovies.length < targetMovies && (
             <button
               onClick={() => router.push("/setup")}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+              className="bg-green-600 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-green-700 transition"
             >
               Add More Movies ({savedMovies.length}/{targetMovies})
             </button>
           )}
           <button
             onClick={handleFinish}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-blue-700 transition"
           >
             Continue to Final Result
           </button>

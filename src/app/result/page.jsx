@@ -112,11 +112,13 @@ function ResultContent() {
   const genreNames = selectedMovie.genres?.map((g) => g.name).join(", ");
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6">
-      <h1 className="text-3xl font-bold mb-4">{selectedMovie.title}</h1>
+    <main className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 max-w-3xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-center">
+        {selectedMovie.title}
+      </h1>
 
       {selectedMovie.poster_path && (
-        <div className="w-64 h-[384px] relative mb-4">
+        <div className="w-48 h-72 sm:w-64 sm:h-[384px] relative mb-4">
           <Image
             src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`}
             alt={selectedMovie.title}
@@ -127,28 +129,30 @@ function ResultContent() {
         </div>
       )}
 
-      <p className="mb-2">
+      <p className="mb-2 text-sm sm:text-base text-center max-w-2xl">
         <strong>Overview:</strong> {selectedMovie.overview}
       </p>
-      <p className="mb-2">
+      <p className="mb-2 text-sm sm:text-base">
         <strong>Release date:</strong> {selectedMovie.release_date}
       </p>
-      <p className="mb-2">
+      <p className="mb-2 text-sm sm:text-base">
         <strong>Genres:</strong> {genreNames || "N/A"}
       </p>
-      <p className="mb-4">
+      <p className="mb-4 text-sm sm:text-base">
         <strong>Rating:</strong> {selectedMovie.vote_average ?? "N/A"}
       </p>
 
       {/* Cast Section */}
       {cast.length > 0 && (
         <div className="w-full mb-6">
-          <h3 className="text-xl font-bold mb-4 text-center">Cast</h3>
-          <div className="flex flex-wrap justify-center gap-4">
+          <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-center">
+            Cast
+          </h3>
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
             {cast.map((actor) => (
               <div key={actor.id} className="text-center">
                 {actor.profile_path && (
-                  <div className="relative w-24 h-32 mb-2">
+                  <div className="relative w-20 h-28 sm:w-24 sm:h-32 mb-2">
                     <Image
                       src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
                       alt={actor.name}
@@ -157,7 +161,7 @@ function ResultContent() {
                     />
                   </div>
                 )}
-                <p className="font-semibold text-sm">{actor.name}</p>
+                <p className="font-semibold text-xs sm:text-sm">{actor.name}</p>
                 <p className="text-xs text-gray-400">{actor.character}</p>
               </div>
             ))}
@@ -165,16 +169,16 @@ function ResultContent() {
         </div>
       )}
 
-      <div className="flex gap-4 mb-4">
+      <div className="flex flex-wrap gap-3 sm:gap-4 mb-4 justify-center">
         <button
           onClick={pickRandomMovie}
-          className="bg-green-600 text-white px-4 py-2 rounded"
+          className="bg-green-600 text-white px-4 sm:px-5 py-2 rounded text-sm sm:text-base hover:bg-green-700 transition"
         >
           Pick Again
         </button>
         <button
           onClick={() => router.push("/list")}
-          className="bg-gray-400 text-white px-4 py-2 rounded"
+          className="bg-gray-400 text-white px-4 sm:px-5 py-2 rounded text-sm sm:text-base hover:bg-gray-500 transition"
         >
           Back to List
         </button>
@@ -186,7 +190,7 @@ function ResultContent() {
           localStorage.removeItem("targetMovies");
           router.push("/");
         }}
-        className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition"
+        className="bg-purple-600 text-white px-5 sm:px-6 py-2 rounded text-sm sm:text-base hover:bg-purple-700 transition"
       >
         Try Again
       </button>

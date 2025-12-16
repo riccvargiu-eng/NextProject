@@ -125,24 +125,24 @@ function BrowseContent() {
       style={{ height: "100vh", overflow: "hidden" }}
     >
       {/* CARD e azioni centrati verticalmente */}
-      <div className="flex flex-col items-center justify-center flex-grow w-full px-4 gap-4">
+      <div className="flex flex-col items-center justify-center flex-grow w-full px-2 sm:px-4 gap-3 sm:gap-4">
         <MovieCard movie={movie} trailerKey={trailerKey} cast={cast} />
 
-        <div className="flex gap-3 flex-wrap justify-center">
+        <div className="flex gap-2 sm:gap-3 flex-wrap justify-center">
           <button
             onClick={() => {
               localStorage.removeItem("savedMovies");
               setSavedMovies([]);
               setCurrentIndex(0);
             }}
-            className="bg-orange-600 text-white px-4 py-2 rounded"
+            className="bg-orange-600 text-white px-3 sm:px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-700 transition"
           >
             Reset
           </button>
 
           <button
             onClick={nextMovie}
-            className="bg-gray-400 text-white px-4 py-2 rounded"
+            className="bg-gray-400 text-white px-3 sm:px-4 py-2 rounded text-sm sm:text-base hover:bg-gray-500 transition"
           >
             Skip
           </button>
@@ -150,7 +150,7 @@ function BrowseContent() {
           {progress < totalMovies && (
             <button
               onClick={() => saveMovie(movie)}
-              className="bg-green-600 text-white px-4 py-2 rounded"
+              className="bg-green-600 text-white px-3 sm:px-4 py-2 rounded text-sm sm:text-base hover:bg-green-700 transition"
             >
               Save
             </button>

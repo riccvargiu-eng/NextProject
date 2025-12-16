@@ -90,17 +90,17 @@ export default function DetailsPage({ params: paramsPromise }) {
   const genreNames = movie.genres?.map((g) => g.name).join(", ");
 
   return (
-    <main className="p-6 max-w-4xl mx-auto">
+    <main className="p-4 sm:p-6 max-w-4xl mx-auto">
       <button
         onClick={() => router.back()}
-        className="mb-4 bg-gray-400 text-white px-4 py-2 rounded"
+        className="mb-4 bg-gray-400 text-white px-3 sm:px-4 py-2 rounded text-sm sm:text-base"
       >
         ← Back
       </button>
 
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="flex flex-col md:flex-row gap-4 sm:gap-6">
         {movie.poster_path && (
-          <div className="w-64 h-96 relative flex-shrink-0">
+          <div className="w-48 h-72 sm:w-64 sm:h-96 relative flex-shrink-0 mx-auto md:mx-0">
             <Image
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
@@ -111,18 +111,20 @@ export default function DetailsPage({ params: paramsPromise }) {
           </div>
         )}
 
-        <div>
-          <h1 className="text-3xl font-bold mb-4">{movie.title}</h1>
-          <p className="mb-2">
+        <div className="flex-1">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">
+            {movie.title}
+          </h1>
+          <p className="mb-2 text-sm sm:text-base">
             <strong>Overview:</strong> {movie.overview}
           </p>
-          <p className="mb-2">
+          <p className="mb-2 text-sm sm:text-base">
             <strong>Release date:</strong> {movie.release_date}
           </p>
-          <p className="mb-2">
+          <p className="mb-2 text-sm sm:text-base">
             <strong>Genres:</strong> {genreNames || "N/A"}
           </p>
-          <p className="mb-2">
+          <p className="mb-2 text-sm sm:text-base">
             <strong>Rating:</strong> {movie.vote_average ?? "N/A"}
           </p>
         </div>
@@ -130,16 +132,18 @@ export default function DetailsPage({ params: paramsPromise }) {
 
       {/* Cast Section */}
       {cast.length > 0 && (
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-6 text-center">Cast</h2>
-          <div className="flex flex-wrap justify-center gap-4">
+        <div className="mt-8 sm:mt-12">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">
+            Cast
+          </h2>
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
             {cast.slice(0, 12).map((actor) => (
               <div
                 key={actor.id}
-                className="w-32 text-center flex flex-col items-center"
+                className="w-24 sm:w-32 text-center flex flex-col items-center"
               >
                 {actor.profile_path && (
-                  <div className="relative w-32 h-48 mb-2">
+                  <div className="relative w-24 h-36 sm:w-32 sm:h-48 mb-2">
                     <Image
                       src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
                       alt={actor.name}
@@ -148,7 +152,7 @@ export default function DetailsPage({ params: paramsPromise }) {
                     />
                   </div>
                 )}
-                <p className="font-semibold text-sm">{actor.name}</p>
+                <p className="font-semibold text-xs sm:text-sm">{actor.name}</p>
                 <p className="text-xs text-gray-400">{actor.character}</p>
               </div>
             ))}
@@ -158,18 +162,18 @@ export default function DetailsPage({ params: paramsPromise }) {
 
       {/* Trailer Section */}
       {trailerKey && (
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-6 text-center">Trailer</h2>
-          <div className="flex justify-center">
+        <div className="mt-8 sm:mt-12">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">
+            Trailer
+          </h2>
+          <div className="flex justify-center px-4">
             <iframe
-              width="560"
-              height="315"
+              className="w-full max-w-2xl aspect-video rounded-lg shadow"
               src={`https://www.youtube.com/embed/${trailerKey}`}
               title="Movie Trailer"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              className="rounded-lg shadow"
             />
           </div>
         </div>

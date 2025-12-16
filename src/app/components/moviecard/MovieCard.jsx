@@ -1,17 +1,25 @@
 "use client";
 
 import Image from "next/image";
+import { useState, useLayoutEffect } from "react";
 import styles from "./MovieCard.module.css";
 
 export default function MovieCard({ movie, trailerKey, cast }) {
+  const [isMobile, setIsMobile] = useState(true); // Default a true per evitare hydration mismatch
+
+  useLayoutEffect(() => {
+    // Controlla la dimensione dello schermo immediatamente
+    setIsMobile(window.innerWidth < 640);
+  }, []);
+
   if (!movie) return null;
 
   return (
     <div className={styles.card}>
       {/* Riga principale: poster, trailer, info */}
       <div className={styles.contentRow}>
-        {/* POSTER */}
-        {movie.poster_path && (
+        {/* POSTER - NON renderizzato su mobile */}
+        {!isMobile && movie.poster_path && (
           <div className={styles.posterWrapper}>
             <Image
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

@@ -46,19 +46,21 @@ export default function SetupPage() {
   };
 
   return (
-    <main className="p-6 max-w-md mx-auto">
-      <h1 className="text-3xl font-bold mb-16 text-center">Setup Filters</h1>
+    <main className="p-4 sm:p-6 max-w-md mx-auto min-h-screen">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-16 text-center">
+        Setup Filters
+      </h1>
 
       {/* Numero di film da salvare */}
-      <div className="mb-10">
-        <label className="block text-center mb-3 text-lg">
+      <div className="mb-8 sm:mb-10">
+        <label className="block text-center mb-2 sm:mb-3 text-base sm:text-lg">
           Create your list!
         </label>
         <div className="flex justify-center">
           <select
             value={totalMovies}
             onChange={(e) => setTotalMovies(Number(e.target.value))}
-            className="border p-2 text-base"
+            className="border p-2 text-sm sm:text-base rounded"
           >
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
               <option key={num} value={num}>
@@ -70,12 +72,12 @@ export default function SetupPage() {
       </div>
 
       {/* Selezione del genere */}
-      <label className="block mb-16 text-center text-lg">
+      <label className="block mb-10 sm:mb-16 text-center text-base sm:text-lg">
         Genre:
         <select
           value={selectedGenre}
           onChange={(e) => setSelectedGenre(e.target.value)}
-          className="border p-2 ml-2 w-full text-base"
+          className="border p-2 ml-2 w-full text-sm sm:text-base rounded mt-2"
         >
           <option value="">-- Choose genre --</option>
           {genres.map((g) => (
@@ -87,7 +89,7 @@ export default function SetupPage() {
       </label>
 
       {/* Slider rating */}
-      <label className="block mb-10 text-center text-lg">
+      <label className="block mb-8 sm:mb-10 text-center text-base sm:text-lg">
         Minimum rating: {selectedRating.toFixed(1)}
         <input
           type="range"
@@ -104,7 +106,7 @@ export default function SetupPage() {
       <div className="flex justify-center">
         <button
           onClick={handleStart}
-          className="bg-blue-600 text-white px-6 py-3 rounded text-lg"
+          className="bg-blue-600 text-white px-6 sm:px-8 py-3 rounded text-base sm:text-lg hover:bg-blue-700 transition"
         >
           Start
         </button>
