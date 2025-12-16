@@ -5,10 +5,9 @@ import { useState, useLayoutEffect } from "react";
 import styles from "./MovieCard.module.css";
 
 export default function MovieCard({ movie, trailerKey, cast }) {
-  const [isMobile, setIsMobile] = useState(true); // Default a true per evitare hydration mismatch
+  const [isMobile, setIsMobile] = useState(true);
 
   useLayoutEffect(() => {
-    // Controlla la dimensione dello schermo immediatamente
     setIsMobile(window.innerWidth < 640);
   }, []);
 
@@ -16,9 +15,7 @@ export default function MovieCard({ movie, trailerKey, cast }) {
 
   return (
     <div className={styles.card}>
-      {/* Riga principale: poster, trailer, info */}
       <div className={styles.contentRow}>
-        {/* POSTER - NON renderizzato su mobile */}
         {!isMobile && movie.poster_path && (
           <div className={styles.posterWrapper}>
             <Image
@@ -31,7 +28,6 @@ export default function MovieCard({ movie, trailerKey, cast }) {
           </div>
         )}
 
-        {/* TRAILER */}
         <div className={styles.trailerWrapper}>
           {trailerKey ? (
             <iframe
@@ -49,7 +45,6 @@ export default function MovieCard({ movie, trailerKey, cast }) {
           )}
         </div>
 
-        {/* INFO */}
         <div className={styles.info}>
           <h2 className={styles.title}>{movie.title}</h2>
           <p className={styles.overview}>

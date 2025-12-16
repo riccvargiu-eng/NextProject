@@ -130,7 +130,6 @@ export default function DetailsPage({ params: paramsPromise }) {
         </div>
       </div>
 
-      {/* Cast Section */}
       {cast.length > 0 && (
         <div className="mt-8 sm:mt-12">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">
@@ -160,7 +159,6 @@ export default function DetailsPage({ params: paramsPromise }) {
         </div>
       )}
 
-      {/* Trailer Section */}
       {trailerKey && (
         <div className="mt-8 sm:mt-12">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">

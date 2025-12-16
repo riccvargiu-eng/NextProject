@@ -124,7 +124,6 @@ function BrowseContent() {
       className="flex flex-col items-center justify-center w-full"
       style={{ height: "100vh", overflow: "hidden" }}
     >
-      {/* CARD e azioni centrati verticalmente */}
       <div className="flex flex-col items-center justify-center flex-grow w-full px-2 sm:px-4 gap-3 sm:gap-4">
         <MovieCard movie={movie} trailerKey={trailerKey} cast={cast} />
 

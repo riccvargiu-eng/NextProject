@@ -92,7 +92,6 @@ export default function ListPage() {
             key={movie.id}
             className="border p-4 rounded shadow bg-gray-900 text-white flex flex-col h-full"
           >
-            {/* Titolo - fixed height section */}
             <div className="h-16 flex items-center mb-3">
               <h3 className="text-lg font-semibold">
                 <Link
@@ -104,7 +103,6 @@ export default function ListPage() {
               </h3>
             </div>
 
-            {/* Poster - fixed height section */}
             <div className="mb-3">
               {movie.poster_path && (
                 <div className="relative w-full aspect-[2/3]">
@@ -125,7 +123,6 @@ export default function ListPage() {
               </p>
             </div>
 
-            {/* Cast Preview - fixed section */}
             {movie.cast && movie.cast.length > 0 && (
               <div className="mb-4 text-xs">
                 <p className="font-semibold mb-1">Cast:</p>
@@ -138,7 +135,6 @@ export default function ListPage() {
               </div>
             )}
 
-            {/* Remove button - fixed at bottom */}
             <button
               onClick={() => handleRemove(movie.id)}
               className="bg-red-600 text-white px-3 py-2 rounded self-start text-sm sm:text-base hover:bg-red-700 transition"
@@ -150,18 +146,19 @@ export default function ListPage() {
       </div>
 
       {savedMovies.length > 0 && (
-        <div className="flex gap-3 sm:gap-4 mt-6 flex-wrap justify-center sm:justify-start">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 justify-center sm:justify-start">
           {savedMovies.length < targetMovies && (
             <button
               onClick={() => router.push("/setup")}
-              className="bg-green-600 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-green-700 transition"
+              className="bg-green-600 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-green-700 transition w-full sm:w-auto"
             >
               Add More Movies ({savedMovies.length}/{targetMovies})
             </button>
           )}
           <button
             onClick={handleFinish}
-            className="bg-blue-600 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-blue-700 transition w-full sm:w-auto"
+            disabled={savedMovies.length === 0}
           >
             Continue to Final Result
           </button>

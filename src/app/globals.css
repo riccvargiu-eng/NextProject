@@ -21,15 +21,15 @@
 
 body {
   background-color: #111; /* sfondo scuro */
-  color: white;           /* testo principale bianco */
+  color: white; /* testo principale bianco */
   font-family: sans-serif;
 }
 
 /* globals.css */
 select {
-  background-color: #222; /* leggermente più chiaro del body */
-  color: white;            /* testo bianco */
-  border: 1px solid #444;  /* bordo visibile */
+  background-color: #222;
+  color: white;
+  border: 1px solid #444;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
 }

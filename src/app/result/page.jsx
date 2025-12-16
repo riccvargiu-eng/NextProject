@@ -142,7 +142,6 @@ function ResultContent() {
         <strong>Rating:</strong> {selectedMovie.vote_average ?? "N/A"}
       </p>
 
-      {/* Cast Section */}
       {cast.length > 0 && (
         <div className="w-full mb-6">
           <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-center">

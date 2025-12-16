@@ -1,15 +1,10 @@
 /* MovieCard.module.css */
 
-/* CARD */
 .card {
   background: #1a1a1a;
   border-radius: 16px;
   padding: 12px;
-  width: clamp(
-    280px,
-    95%,
-    1400px
-  ); /* larghezza responsiva, minimo 280px per mobile */
+  width: clamp(280px, 95%, 1400px);
   max-height: 85vh; /* mai più alta della viewport */
   display: flex;
   flex-direction: column;
@@ -34,16 +29,14 @@
   }
 }
 
-/* Riga principale: poster, trailer, info */
 .contentRow {
   display: flex;
   gap: 16px;
   align-items: stretch;
   height: 100%;
-  flex-wrap: wrap; /* per mobile, permette di impilare poster/trailer/info */
+  flex-wrap: wrap;
 }
 
-/* POSTER */
 .posterWrapper {
   position: relative;
   width: 160px;
@@ -57,7 +50,6 @@
   }
 }
 
-/* Poster più grande su schermi grandi */
 @media (min-width: 2000px) {
   .posterWrapper {
     width: 280px;
@@ -65,13 +57,12 @@
 }
 
 .poster {
-  object-fit: contain; /* mantiene l'intera immagine senza tagli */
+  object-fit: contain;
   width: 100%;
   height: 100%;
   border-radius: 12px;
 }
 
-/* TRAILER */
 .trailerWrapper {
   flex: 1;
   display: flex;
