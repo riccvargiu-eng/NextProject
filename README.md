@@ -2,7 +2,7 @@
 
 ## 🔗 Link
 
-https://film-picker.vercel.app/
+**https://film-picker.vercel.app/**
 
 ## 📒 User Story
 
@@ -46,10 +46,9 @@ Thanks to **TMDB** for providing the API necessary for the functionality of this
 
 ---
 
-
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## 👣 Getting Started
 
 First, run the development server:
 
