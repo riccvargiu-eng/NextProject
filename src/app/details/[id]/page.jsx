@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import Image from "next/image";
 
 export default function DetailsPage({ params: paramsPromise }) {
@@ -83,17 +84,7 @@ export default function DetailsPage({ params: paramsPromise }) {
   }
 
   if (!movie) {
-    return (
-      <main className="flex flex-col items-center justify-center min-h-screen p-6">
-        <h1 className="text-2xl font-bold mb-4">Movie not found</h1>
-        <button
-          onClick={() => router.back()}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          Go Back
-        </button>
-      </main>
-    );
+    notFound();
   }
 
   const genreNames = movie.genres?.map((g) => g.name).join(", ");
