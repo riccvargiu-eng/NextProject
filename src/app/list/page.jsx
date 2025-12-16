@@ -93,7 +93,7 @@ export default function ListPage() {
             className="border p-4 rounded shadow bg-gray-900 text-white flex flex-col h-full"
           >
             <div className="h-16 flex items-center mb-3">
-              <h3 className="text-lg font-semibold">
+              <h3 className="text-base sm:text-lg font-semibold">
                 <Link
                   href={`/details/${movie.id}`}
                   className="text-blue-400 underline"
@@ -118,13 +118,13 @@ export default function ListPage() {
 
             {/* Description - flexible section */}
             <div className="flex-1 mb-4">
-              <p className="text-sm text-gray-300 line-clamp-4 h-24 overflow-hidden">
+              <p className="text-base sm:text-sm text-gray-300 line-clamp-4 h-24 overflow-hidden">
                 {movie.overview}
               </p>
             </div>
 
             {movie.cast && movie.cast.length > 0 && (
-              <div className="mb-4 text-xs">
+              <div className="mb-4 text-sm sm:text-xs">
                 <p className="font-semibold mb-1">Cast:</p>
                 <p className="text-gray-400 line-clamp-2">
                   {movie.cast
