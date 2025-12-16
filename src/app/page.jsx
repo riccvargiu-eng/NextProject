@@ -20,14 +20,14 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-zinc-50 dark:bg-black">
+    <main className="flex flex-col items-center justify-start min-h-screen pt-64 p-6 bg-zinc-50 dark:bg-black">
       <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
         Film Picker
       </h1>
 
       <p className="mb-6 text-center text-gray-700 dark:text-gray-300 max-w-md">
-        Unsure what movie to watch? <br /> Use Film Picker to select your favorite
-        movies from a list and get a random recommendation!
+        Unsure what movie to watch? <br /> Use Film Picker to select your
+        favorite movies from a list and get a random recommendation!
       </p>
 
       <Link
