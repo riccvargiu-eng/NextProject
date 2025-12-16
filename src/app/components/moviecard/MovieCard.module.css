@@ -1,9 +1,12 @@
+/* MovieCard.module.css */
+
+/* CARD */
 .card {
   background: #1a1a1a;
   border-radius: 16px;
   padding: 16px;
-  width: clamp(600px, 80%, 1400px);
-  max-height: 80vh; /* card mai più alta della viewport */
+  width: clamp(600px, 80%, 1400px); /* larghezza responsiva */
+  max-height: 80vh; /* mai più alta della viewport */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -16,6 +19,7 @@
   gap: 16px;
   align-items: stretch;
   height: 100%;
+  flex-wrap: wrap; /* per mobile, permette di impilare poster/trailer/info */
 }
 
 /* POSTER */
@@ -27,7 +31,9 @@
 }
 
 .poster {
-  object-fit: cover;
+  object-fit: contain; /* mantiene l'intera immagine senza tagli */
+  width: 100%;
+  height: 100%;
   border-radius: 12px;
 }
 
@@ -37,6 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 200px;
 }
 
 .trailerPlaceholder {
@@ -56,6 +63,7 @@
   width: 300px;
   display: flex;
   flex-direction: column;
+  min-width: 200px;
 }
 
 .title {
@@ -83,6 +91,9 @@
 /* AZIONI */
 .actions {
   margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .actions button {
@@ -96,4 +107,27 @@
 
 .actions button:hover {
   background: #1d4ed8;
+}
+
+/* MEDIA QUERIES PER MOBILE */
+@media (max-width: 768px) {
+  .contentRow {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .posterWrapper,
+  .trailerWrapper,
+  .info {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .trailerWrapper {
+    margin-top: 12px;
+  }
+
+  .info {
+    margin-top: 12px;
+  }
 }
