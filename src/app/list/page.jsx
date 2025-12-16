@@ -110,7 +110,6 @@ export default function ListPage() {
               )}
             </div>
 
-            {/* Description - flexible section */}
             <div className="flex-1 mb-4">
               <p className="text-base sm:text-sm text-gray-300 line-clamp-4 h-24 overflow-hidden">
                 {movie.overview}

@@ -1,11 +1,9 @@
-/* MovieCard.module.css */
-
 .card {
   background: #1a1a1a;
   border-radius: 16px;
   padding: 12px;
   width: clamp(280px, 95%, 1400px);
-  max-height: 85vh; /* mai più alta della viewport */
+  max-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -106,7 +104,6 @@
   font-size: 14px;
 }
 
-/* INFO */
 .info {
   width: 100%;
   display: flex;
@@ -233,7 +230,6 @@
   }
 }
 
-/* AZIONI */
 .actions {
   margin-top: 16px;
   display: flex;

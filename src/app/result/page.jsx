@@ -23,7 +23,6 @@ function ResultContent() {
   const [shownIds, setShownIds] = useState([]);
   const [shuffledIds, setShuffledIds] = useState([]);
 
-  // Recupera ids dai query params o fallback a localStorage
   const getSavedIds = () => {
     const idsString = searchParams.get("ids");
     if (idsString) return idsString.split(",");
@@ -39,13 +38,11 @@ function ResultContent() {
 
     setLoading(true);
 
-    // Inizializza shuffledIds se vuoto
     if (shuffledIds.length === 0) {
       setShuffledIds(shuffleArray(savedIds));
       setShownIds([]);
     }
 
-    // Prendi il primo ID non ancora mostrato
     let availableIds = shuffledIds.filter((id) => !shownIds.includes(id));
     let nextId;
 
@@ -64,7 +61,6 @@ function ResultContent() {
       const movie = await res.json();
       setSelectedMovie(movie);
 
-      // Fetch cast
       const castRes = await fetch(
         `https://api.themoviedb.org/3/movie/${nextId}/credits?api_key=${
           process.env.NEXT_PUBLIC_TMDB_API_KEY || ""

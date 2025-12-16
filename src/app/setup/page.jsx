@@ -7,12 +7,11 @@ export default function SetupPage() {
   const router = useRouter();
 
   const [genres, setGenres] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState(""); // genere scelto
-  const [selectedRating, setSelectedRating] = useState(0); // rating minimo
-  const [totalMovies, setTotalMovies] = useState(5); // numero film da salvare
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [totalMovies, setTotalMovies] = useState(5);
   const [loading, setLoading] = useState(false);
 
-  // Carichiamo i generi tramite API route server-side
   useEffect(() => {
     async function fetchGenres() {
       try {
@@ -30,7 +29,6 @@ export default function SetupPage() {
   const handleStart = () => {
     if (!selectedGenre) return alert("Seleziona un genere!");
     setLoading(true);
-    // Salva il target di film desiderato e i parametri di ricerca in localStorage
     localStorage.setItem("targetMovies", totalMovies.toString());
     localStorage.setItem(
       "searchParams",
@@ -41,7 +39,7 @@ export default function SetupPage() {
       })
     );
     router.push(
-      `/browse?genre=${selectedGenre}&rating=${selectedRating}&total=${totalMovies}` // reindirizza alla pagina di navigazione con i parametri selezionati
+      `/browse?genre=${selectedGenre}&rating=${selectedRating}&total=${totalMovies}`
     );
   };
 
@@ -51,7 +49,6 @@ export default function SetupPage() {
         Imposta i filtri
       </h1>
 
-      {/* Numero di film da salvare */}
       <div className="mb-8 sm:mb-10">
         <label className="block text-center mb-2 sm:mb-3 text-base sm:text-lg">
           Crea la tua lista!
@@ -71,7 +68,6 @@ export default function SetupPage() {
         </div>
       </div>
 
-      {/* Selezione del genere */}
       <label className="block mb-10 sm:mb-16 text-center text-base sm:text-lg">
         Genere:
         <select
@@ -88,7 +84,6 @@ export default function SetupPage() {
         </select>
       </label>
 
-      {/* Slider rating */}
       <label className="block mb-8 sm:mb-10 text-center text-base sm:text-lg">
         Valutazione minima: {selectedRating.toFixed(1)}
         <input
@@ -102,7 +97,6 @@ export default function SetupPage() {
         />
       </label>
 
-      {/* Pulsante start */}
       <div className="flex justify-center">
         <button
           onClick={handleStart}

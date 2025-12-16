@@ -38,7 +38,6 @@ export async function GET(request, { params }) {
 
     if (!res.ok) {
       const text = await res.text();
-      // If TMDB returns an auth or other error, fallback to mock data so UI stays usable
       console.error("TMDB response error for movie", id, res.status, text);
       const mock = {
         id,

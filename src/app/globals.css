@@ -4,7 +4,6 @@
   --background: #ffffff;
   --foreground: #171717;
 }
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -20,12 +19,10 @@
 }
 
 body {
-  background-color: #111; /* sfondo scuro */
-  color: white; /* testo principale bianco */
+  background-color: #111;
+  color: white;
   font-family: sans-serif;
 }
-
-/* globals.css */
 select {
   background-color: #222;
   color: white;
