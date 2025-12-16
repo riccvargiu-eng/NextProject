@@ -16,6 +16,10 @@ function BrowseContent() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [savedMovies, setSavedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [trailerKey, setTrailerKey] = useState(null);
+
+  const movie = movies[currentIndex] || null;
+  const progress = savedMovies.length;
 
   // Carica film salvati
   useEffect(() => {
@@ -42,6 +46,29 @@ function BrowseContent() {
     }
     fetchMovies();
   }, [genre, rating]);
+
+  // Fetch trailer quando cambia il film
+  useEffect(() => {
+    async function fetchTrailer() {
+      if (!movie?.id) return;
+      try {
+        const res = await fetch(
+          `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${
+            process.env.NEXT_PUBLIC_TMDB_API_KEY || ""
+          }`
+        );
+        const data = await res.json();
+        const trailer = data.results?.find(
+          (video) => video.type === "Trailer" && video.site === "YouTube"
+        );
+        setTrailerKey(trailer?.key || null);
+      } catch (err) {
+        console.error("Error fetching trailer:", err);
+        setTrailerKey(null);
+      }
+    }
+    fetchTrailer();
+  }, [movie?.id]);
 
   const nextMovie = () => {
     setCurrentIndex((prev) => (prev + 1 < movies.length ? prev + 1 : 0));
@@ -80,35 +107,32 @@ function BrowseContent() {
     );
   }
 
-  const movie = movies[currentIndex];
-  const progress = savedMovies.length;
-
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen w-full py-4">
-      {/* HEADER */}
-      <div className="w-full max-w-6xl flex justify-between items-center mb-4 px-4">
-        <h1 className="text-xl font-bold">Browse Movies</h1>
-        <button
-          onClick={() => {
-            localStorage.removeItem("savedMovies");
-            setSavedMovies([]);
-            setCurrentIndex(0);
-          }}
-          className="bg-orange-600 text-white px-3 py-1.5 rounded"
-        >
-          Reset
-        </button>
-      </div>
-
+    <main
+      className="flex flex-col items-center justify-center w-full"
+      style={{ height: "100vh", overflow: "hidden" }}
+    >
       {/* CARD e azioni centrati verticalmente */}
-      <div className="flex flex-col items-center justify-center flex-grow w-full px-4">
+      <div className="flex flex-col items-center justify-center flex-grow w-full px-4 gap-4">
         <MovieCard
           movie={movie}
           actionLabel="Save"
           onPrimaryAction={() => saveMovie(movie)}
+          trailerKey={trailerKey}
         />
 
-        <div className="flex gap-4 mt-4">
+        <div className="flex gap-3 flex-wrap justify-center">
+          <button
+            onClick={() => {
+              localStorage.removeItem("savedMovies");
+              setSavedMovies([]);
+              setCurrentIndex(0);
+            }}
+            className="bg-orange-600 text-white px-4 py-2 rounded"
+          >
+            Reset
+          </button>
+
           <button
             onClick={nextMovie}
             className="bg-gray-400 text-white px-4 py-2 rounded"
@@ -126,14 +150,14 @@ function BrowseContent() {
           )}
         </div>
 
-        <p className="mt-2 text-sm text-gray-500">
+        <p className="text-sm text-gray-500">
           Saved {progress} of {totalMovies}
         </p>
 
         {progress >= totalMovies && (
           <button
             onClick={() => router.push("/list")}
-            className="mt-2 bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-blue-600 text-white px-4 py-2 rounded"
           >
             Go to List
           </button>

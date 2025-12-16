@@ -3,7 +3,12 @@
 import Image from "next/image";
 import styles from "./MovieCard.module.css";
 
-export default function MovieCard({ movie, onPrimaryAction, actionLabel }) {
+export default function MovieCard({
+  movie,
+  onPrimaryAction,
+  actionLabel,
+  trailerKey,
+}) {
   if (!movie) return null;
 
   return (
@@ -18,15 +23,27 @@ export default function MovieCard({ movie, onPrimaryAction, actionLabel }) {
               alt={movie.title}
               fill
               className={styles.poster}
-              sizes="200px"
+              sizes="(max-width: 1440px) 200px, 280px"
             />
           </div>
         )}
 
         {/* TRAILER */}
         <div className={styles.trailerWrapper}>
-          {/* Placeholder per iframe YouTube */}
-          <div className={styles.trailerPlaceholder}>Trailer</div>
+          {trailerKey ? (
+            <iframe
+              className={styles.trailerIframe}
+              src={`https://www.youtube.com/embed/${trailerKey}`}
+              title="Movie Trailer"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <div className={styles.trailerPlaceholder}>
+              No Trailer Available
+            </div>
+          )}
         </div>
 
         {/* INFO */}
