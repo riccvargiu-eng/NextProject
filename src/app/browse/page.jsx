@@ -95,12 +95,12 @@ function BrowseContent() {
   if (!genre) {
     return (
       <main className="flex flex-col items-center justify-center h-screen w-full">
-        <h1 className="text-2xl font-bold mb-4">No genre selected</h1>
+        <h1 className="text-2xl font-bold mb-4">Nessun genere selezionato</h1>
         <button
           onClick={() => router.push("/setup")}
           className="bg-blue-600 text-white px-4 py-2 rounded"
         >
-          Go Back
+          Torna indietro
         </button>
       </main>
     );
@@ -109,7 +109,7 @@ function BrowseContent() {
   if (loading || movies.length === 0) {
     return (
       <main className="flex items-center justify-center h-screen w-full">
-        <p className="text-lg">Loading movies...</p>
+        <p className="text-lg">Caricamento film...</p>
       </main>
     );
   }
@@ -131,7 +131,7 @@ function BrowseContent() {
             }}
             className="bg-orange-600 text-white px-3 sm:px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-700 transition"
           >
-            Reset
+            Resetta
           </button>
 
           <button
@@ -146,13 +146,13 @@ function BrowseContent() {
               onClick={() => saveMovie(movie)}
               className="bg-green-600 text-white px-3 sm:px-4 py-2 rounded text-sm sm:text-base hover:bg-green-700 transition"
             >
-              Save
+              Salva
             </button>
           )}
         </div>
 
         <p className="text-sm text-gray-500">
-          Saved {progress} of {totalMovies}
+          Salvati {progress} di {totalMovies}
         </p>
 
         {progress >= totalMovies && (
@@ -160,7 +160,7 @@ function BrowseContent() {
             onClick={() => router.push("/list")}
             className="bg-blue-600 text-white px-4 py-2 rounded"
           >
-            Go to List
+            Vai alla lista
           </button>
         )}
       </div>
@@ -173,7 +173,7 @@ export default function BrowsePage() {
     <Suspense
       fallback={
         <main className="flex items-center justify-center h-screen w-full">
-          <p className="text-lg">Loading...</p>
+          <p className="text-lg">Caricamento...</p>
         </main>
       }
     >

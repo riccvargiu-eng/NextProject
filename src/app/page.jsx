@@ -26,15 +26,15 @@ export default function Home() {
       </h1>
 
       <p className="mb-6 sm:mb-8 text-center text-base sm:text-lg text-gray-300 dark:text-gray-300 max-w-md px-4">
-        Unsure what movie to watch? <br /> Use Film Picker to select your
-        favorite movies from a list and get a random recommendation!
+        Non sai che film guardare? <br /> Usa Film Picker per selezionare i tuoi
+        film preferiti da una lista e ottenere un consiglio casuale!
       </p>
 
       <Link
         href="/setup"
         className="bg-blue-600 text-white px-6 sm:px-8 py-3 rounded text-base sm:text-lg hover:bg-blue-700 transition"
       >
-        Start Film Picker
+        Avvia Film Picker
       </Link>
     </main>
   );

@@ -76,7 +76,7 @@ export default function DetailsPage({ params: paramsPromise }) {
   if (loading) {
     return (
       <main className="flex items-center justify-center min-h-screen p-6">
-        <p className="text-lg">Loading movie details...</p>
+        <p className="text-lg">Caricamento dettagli film...</p>
       </main>
     );
   }
@@ -93,7 +93,7 @@ export default function DetailsPage({ params: paramsPromise }) {
         onClick={() => router.back()}
         className="mb-4 bg-gray-400 text-white px-3 sm:px-4 py-2 rounded text-sm sm:text-base"
       >
-        ← Back
+        ← Indietro
       </button>
 
       <div className="flex flex-col md:flex-row gap-4 sm:gap-6">
@@ -114,16 +114,16 @@ export default function DetailsPage({ params: paramsPromise }) {
             {movie.title}
           </h1>
           <p className="mb-2 text-sm sm:text-base">
-            <strong>Overview:</strong> {movie.overview}
+            <strong>Trama:</strong> {movie.overview}
           </p>
           <p className="mb-2 text-sm sm:text-base">
-            <strong>Release date:</strong> {movie.release_date}
+            <strong>Data di uscita:</strong> {movie.release_date}
           </p>
           <p className="mb-2 text-sm sm:text-base">
-            <strong>Genres:</strong> {genreNames || "N/A"}
+            <strong>Generi:</strong> {genreNames || "N/A"}
           </p>
           <p className="mb-2 text-sm sm:text-base">
-            <strong>Rating:</strong> {movie.vote_average ?? "N/A"}
+            <strong>Voto:</strong> {movie.vote_average ?? "N/A"}
           </p>
         </div>
       </div>

@@ -33,14 +33,14 @@ export default function MovieCard({ movie, trailerKey, cast }) {
             <iframe
               className={styles.trailerIframe}
               src={`https://www.youtube.com/embed/${trailerKey}`}
-              title="Movie Trailer"
+              title="Trailer del film"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           ) : (
             <div className={styles.trailerPlaceholder}>
-              No Trailer Available
+              Trailer non disponibile
             </div>
           )}
         </div>
@@ -48,7 +48,7 @@ export default function MovieCard({ movie, trailerKey, cast }) {
         <div className={styles.info}>
           <h2 className={styles.title}>{movie.title}</h2>
           <p className={styles.overview}>
-            {movie.overview || "No description available."}
+            {movie.overview || "Nessuna descrizione disponibile."}
           </p>
           <p className={styles.rating}>
             ⭐ {movie.vote_average?.toFixed(1) ?? "N/A"}

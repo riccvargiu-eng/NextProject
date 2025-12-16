@@ -28,7 +28,7 @@ export default function SetupPage() {
   }, []);
 
   const handleStart = () => {
-    if (!selectedGenre) return alert("Please select a genre!");
+    if (!selectedGenre) return alert("Seleziona un genere!");
     setLoading(true);
     // Salva il target di film desiderato e i parametri di ricerca in localStorage
     localStorage.setItem("targetMovies", totalMovies.toString());
@@ -48,13 +48,13 @@ export default function SetupPage() {
   return (
     <main className="p-4 sm:p-6 max-w-md mx-auto min-h-screen">
       <h1 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-16 text-center">
-        Setup Filters
+        Imposta i filtri
       </h1>
 
       {/* Numero di film da salvare */}
       <div className="mb-8 sm:mb-10">
         <label className="block text-center mb-2 sm:mb-3 text-base sm:text-lg">
-          Create your list!
+          Crea la tua lista!
         </label>
         <div className="flex justify-center">
           <select
@@ -64,7 +64,7 @@ export default function SetupPage() {
           >
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
               <option key={num} value={num}>
-                {num} {num === 1 ? "movie" : "movies"}
+                {num} {"film"}
               </option>
             ))}
           </select>
@@ -73,13 +73,13 @@ export default function SetupPage() {
 
       {/* Selezione del genere */}
       <label className="block mb-10 sm:mb-16 text-center text-base sm:text-lg">
-        Genre:
+        Genere:
         <select
           value={selectedGenre}
           onChange={(e) => setSelectedGenre(e.target.value)}
           className="border p-2 ml-2 w-full text-sm sm:text-base rounded mt-2"
         >
-          <option value="">-- Choose genre --</option>
+          <option value="">-- Scegli un genere --</option>
           {genres.map((g) => (
             <option key={g.id} value={g.id}>
               {g.name}
@@ -90,7 +90,7 @@ export default function SetupPage() {
 
       {/* Slider rating */}
       <label className="block mb-8 sm:mb-10 text-center text-base sm:text-lg">
-        Minimum rating: {selectedRating.toFixed(1)}
+        Valutazione minima: {selectedRating.toFixed(1)}
         <input
           type="range"
           min="0"
@@ -108,11 +108,11 @@ export default function SetupPage() {
           onClick={handleStart}
           className="bg-blue-600 text-white px-6 sm:px-8 py-3 rounded text-base sm:text-lg hover:bg-blue-700 transition"
         >
-          Start
+          Inizia
         </button>
       </div>
 
-      {loading && <p className="mt-2 text-sm text-gray-500">Loading...</p>}
+      {loading && <p className="mt-2 text-sm text-gray-500">Caricamento...</p>}
     </main>
   );
 }

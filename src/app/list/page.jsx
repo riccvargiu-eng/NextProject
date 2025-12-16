@@ -59,23 +59,23 @@ export default function ListPage() {
   return (
     <main className="p-4 sm:p-6 max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold">Saved Movies</h1>
+        <h1 className="text-xl sm:text-2xl font-bold">Film salvati</h1>
         <button
           onClick={handleReset}
           className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded text-sm sm:text-base transition"
         >
-          Reset List
+          Resetta lista
         </button>
       </div>
 
       {savedMovies.length === 0 && (
         <div className="text-center">
-          <p className="mb-4">No movies saved yet.</p>
+          <p className="mb-4">Nessun film salvato.</p>
           <button
             onClick={() => router.push("/setup")}
             className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
           >
-            Add Movies to List
+            Aggiungi film alla lista
           </button>
         </div>
       )}
@@ -133,7 +133,7 @@ export default function ListPage() {
               onClick={() => handleRemove(movie.id)}
               className="bg-red-600 text-white px-3 py-2 rounded self-start text-sm sm:text-base hover:bg-red-700 transition"
             >
-              Remove
+              Rimuovi
             </button>
           </div>
         ))}
@@ -146,7 +146,7 @@ export default function ListPage() {
               onClick={() => router.push("/setup")}
               className="bg-green-600 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-green-700 transition w-full sm:w-auto"
             >
-              Add More Movies ({savedMovies.length}/{targetMovies})
+              Aggiungi altri film ({savedMovies.length}/{targetMovies})
             </button>
           )}
           <button
@@ -154,7 +154,7 @@ export default function ListPage() {
             className="bg-blue-600 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-blue-700 transition w-full sm:w-auto"
             disabled={savedMovies.length === 0}
           >
-            Continue to Final Result
+            Vai al risultato finale
           </button>
         </div>
       )}

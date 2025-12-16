@@ -90,12 +90,12 @@ function ResultContent() {
   if (savedIds.length === 0) {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen p-6">
-        <h1 className="text-2xl font-bold mb-4">No movies selected</h1>
+        <h1 className="text-2xl font-bold mb-4">Nessun film selezionato</h1>
         <button
           onClick={() => router.push("/setup")}
           className="bg-blue-600 text-white px-4 py-2 rounded"
         >
-          Go Back
+          Torna indietro
         </button>
       </main>
     );
@@ -104,7 +104,7 @@ function ResultContent() {
   if (loading || !selectedMovie) {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen p-6">
-        <p className="text-lg">Loading movie...</p>
+        <p className="text-lg">Caricamento film...</p>
       </main>
     );
   }
@@ -130,16 +130,16 @@ function ResultContent() {
       )}
 
       <p className="mb-2 text-sm sm:text-base text-center max-w-2xl">
-        <strong>Overview:</strong> {selectedMovie.overview}
+        <strong>Trama:</strong> {selectedMovie.overview}
       </p>
       <p className="mb-2 text-sm sm:text-base">
-        <strong>Release date:</strong> {selectedMovie.release_date}
+        <strong>Data di uscita:</strong> {selectedMovie.release_date}
       </p>
       <p className="mb-2 text-sm sm:text-base">
-        <strong>Genres:</strong> {genreNames || "N/A"}
+        <strong>Generi:</strong> {genreNames || "N/A"}
       </p>
       <p className="mb-4 text-sm sm:text-base">
-        <strong>Rating:</strong> {selectedMovie.vote_average ?? "N/A"}
+        <strong>Voto:</strong> {selectedMovie.vote_average ?? "N/A"}
       </p>
 
       {cast.length > 0 && (
@@ -173,13 +173,13 @@ function ResultContent() {
           onClick={pickRandomMovie}
           className="bg-green-600 text-white px-4 sm:px-5 py-2 rounded text-sm sm:text-base hover:bg-green-700 transition"
         >
-          Pick Again
+          Scegli un altro
         </button>
         <button
           onClick={() => router.push("/list")}
           className="bg-gray-400 text-white px-4 sm:px-5 py-2 rounded text-sm sm:text-base hover:bg-gray-500 transition"
         >
-          Back to List
+          Torna alla lista
         </button>
       </div>
 
@@ -191,7 +191,7 @@ function ResultContent() {
         }}
         className="bg-purple-600 text-white px-5 sm:px-6 py-2 rounded text-sm sm:text-base hover:bg-purple-700 transition"
       >
-        Try Again
+        Ricomincia
       </button>
     </main>
   );
@@ -202,7 +202,7 @@ export default function ResultPage() {
     <Suspense
       fallback={
         <main className="flex items-center justify-center min-h-screen p-6">
-          <p className="text-lg">Loading...</p>
+          <p className="text-lg">Caricamento...</p>
         </main>
       }
     >
